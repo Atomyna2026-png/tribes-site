@@ -1,30 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tribes — For Creatives Who Collaborate</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
-  .logo { font-size: 72px; font-weight: 900; font-style: italic; font-family: Georgia, serif; letter-spacing: -2px; margin-bottom: 16px; }
-  .tagline { font-size: 14px; font-weight: 500; letter-spacing: 3px; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-bottom: 60px; }
-  .badge { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 10px 24px; font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 60px; }
-  .links { display: flex; gap: 32px; }
-  .links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 13px; transition: color 0.2s; }
-  .links a:hover { color: #fff; }
-  .bottom { position: fixed; bottom: 30px; font-size: 11px; color: rgba(255,255,255,0.2); }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tribes — For Creatives Who Collaborate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700;1,900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #f5f5f0;
+      --dim: rgba(245,245,240,0.45);
+      --dimmer: rgba(245,245,240,0.18);
+      --border: rgba(245,245,240,0.10);
+      --gold: #c9a96e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px 60px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,169,110,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── APP ICON ── */
+    .app-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 26px;
+      margin-bottom: 36px;
+      animation: fadeUp 1s ease both;
+      box-shadow: 0 0 0 1px rgba(245,245,240,0.06), 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .app-icon svg {
+      width: 120px;
+      height: 120px;
+      display: block;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: clamp(64px, 12vw, 120px);
+      color: var(--white);
+      letter-spacing: -2px;
+      line-height: 1;
+      animation: fadeUp 1s 0.1s ease both;
+    }
+
+    .tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: clamp(11px, 2vw, 13px);
+      letter-spacing: 0.28em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-top: 18px;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 44px;
+      padding: 14px 32px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      transition: background 0.3s, border-color 0.3s;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .cta-btn:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.25); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.3;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+    .scroll-hint span { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--white), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+      margin: 0 auto;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      text-align: center;
+      padding: 80px 24px 60px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .intro p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.8;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 40px 24px 100px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .features-label {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 64px;
+      opacity: 0.8;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .feature-card {
+      padding: 48px 40px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.4s;
+    }
+    .feature-card.visible { opacity: 1; transform: translateY(0); }
+    .feature-card:hover { background: rgba(255,255,255,0.03); }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .feature-card:hover::before { opacity: 0.6; }
+
+    .feature-icon { font-size: 28px; margin-bottom: 24px; display: block; }
+
+    .feature-num {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 12px;
+      display: block;
+      letter-spacing: 0.1em;
+    }
+
+    .feature-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.75;
+    }
+
+    /* ── HIGHLIGHT BAND ── */
+    .highlight {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight::before {
+      content: 'Tribes';
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: clamp(120px, 22vw, 260px);
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.02);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .highlight-inner { position: relative; max-width: 560px; margin: 0 auto; }
+    .highlight h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(22px, 4vw, 34px);
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .highlight p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--dim);
+      line-height: 1.8;
+    }
+
+    /* ── ROLES ── */
+    .roles {
+      padding: 80px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .roles h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(20px, 3.5vw, 30px);
+      color: var(--white);
+      margin-bottom: 40px;
+    }
+    .roles-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .role-pill {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--dim);
+      padding: 8px 18px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      letter-spacing: 0.02em;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .role-pill:hover { color: var(--white); border-color: rgba(201,169,110,0.4); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    /* Footer icon */
+    .footer-icon {
+      margin: 0 auto 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      display: block;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--dim);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 300;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--dimmer);
+      font-weight: 300;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 0.7; }
+    }
+  </style>
 </head>
 <body>
-  <div class="logo">Tribes</div>
-  <div class="tagline">For creatives who collaborate</div>
-  <div class="badge">Coming soon to the App Store</div>
-  <div class="links">
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="/terms.html">Terms of Service</a>
-    <a href="mailto:support@tribes.network">Support</a>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <!-- Constellation App Icon -->
+    <div class="app-icon">
+      <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="26" fill="#080808"/>
+        <!-- connecting lines -->
+        <line x1="60" y1="27" x2="37" y2="62" stroke="rgba(245,245,240,0.2)" stroke-width="0.75"/>
+        <line x1="60" y1="27" x2="83" y2="62" stroke="rgba(245,245,240,0.2)" stroke-width="0.75"/>
+        <line x1="37" y1="62" x2="83" y2="62" stroke="rgba(245,245,240,0.15)" stroke-width="0.75"/>
+        <!-- midpoint dots -->
+        <circle cx="48.5" cy="44.5" r="1.5" fill="rgba(245,245,240,0.35)"/>
+        <circle cx="71.5" cy="44.5" r="1.5" fill="rgba(245,245,240,0.35)"/>
+        <!-- main top dot -->
+        <circle cx="60" cy="27" r="4" fill="#f5f5f0"/>
+        <!-- side dots -->
+        <circle cx="37" cy="62" r="3" fill="rgba(245,245,240,0.6)"/>
+        <circle cx="83" cy="62" r="3" fill="rgba(245,245,240,0.6)"/>
+        <!-- Tribes wordmark -->
+        <text x="60" y="93" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-weight="900" font-size="22" fill="#f5f5f0">Tribes</text>
+        <!-- subtitle -->
+        <text x="60" y="109" text-anchor="middle" font-family="Georgia,serif" font-size="7.5" fill="rgba(245,245,240,0.3)" letter-spacing="2">FOR CREATIVES</text>
+      </svg>
+    </div>
+
+    <h1 class="logo">Tribes</h1>
+    <p class="tagline">For Creatives Who Collaborate</p>
+    <a href="#features" class="cta-btn">Coming Soon to the App Store</a>
+
+    <div class="scroll-hint">
+      <span>Explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <h2>Where creative professionals find their people</h2>
+    <p>Tribes is a social platform built for the creative industry — photographers, directors, stylists, musicians, designers and more. Discover collaborators, share your work, and build your inner circle.</p>
   </div>
-  <div class="bottom">&copy; 2026 Tribes. All rights reserved.</div>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <p class="features-label">What's inside</p>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <span class="feature-icon">📸</span>
+        <span class="feature-num">01</span>
+        <h3 class="feature-title">Community Feed</h3>
+        <p class="feature-desc">Share your creative work with the world. Post photos, videos, and audio. Swipe through multi-image galleries and react with more than just a like.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🎬</span>
+        <span class="feature-num">02</span>
+        <h3 class="feature-title">Video Calls</h3>
+        <p class="feature-desc">Connect face-to-face with collaborators in HD video calls — built directly into the app. No third-party apps needed.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">✨</span>
+        <span class="feature-num">03</span>
+        <h3 class="feature-title">Collab Requests</h3>
+        <p class="feature-desc">Send and receive collaboration requests with a personal message. Build creative partnerships with professionals who match your vision.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <span class="feature-num">04</span>
+        <h3 class="feature-title">Direct Messaging</h3>
+        <p class="feature-desc">Private conversations with your network. Message individuals or your entire inner circle at once. Everything in one place.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⭕</span>
+        <span class="feature-num">05</span>
+        <h3 class="feature-title">Inner Circle</h3>
+        <p class="feature-desc">Curate your closest collaborators into a private inner circle. Share moodboards, start group chats, and keep your most trusted network close.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🗂</span>
+        <span class="feature-num">06</span>
+        <h3 class="feature-title">Projects & Moodboards</h3>
+        <p class="feature-desc">Create and manage creative projects, invite collaborators, and build visual moodboards to align your team around a shared aesthetic.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔍</span>
+        <span class="feature-num">07</span>
+        <h3 class="feature-title">Discover</h3>
+        <p class="feature-desc">Find talented creatives by role, location, and availability. Filter by photographer, stylist, director, makeup artist — and hundreds more.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔔</span>
+        <span class="feature-num">08</span>
+        <h3 class="feature-title">Smart Notifications</h3>
+        <p class="feature-desc">Stay in the loop with granular notification controls. Choose exactly what matters — connections, collabs, messages, reactions, and more.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🌐</span>
+        <span class="feature-num">09</span>
+        <h3 class="feature-title">Creative Profiles</h3>
+        <p class="feature-desc">Build a rich creative profile that showcases your roles, portfolio, bio, and availability. Let the right people find you.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HIGHLIGHT BAND -->
+  <div class="highlight">
+    <div class="highlight-inner">
+      <h3>"Built for the people behind the lens, the brush, and the beat."</h3>
+      <p>Every feature in Tribes was designed with creative professionals in mind — not influencers, not brands. Just creatives who want to do great work together.</p>
+    </div>
+  </div>
+
+  <!-- ROLES -->
+  <section class="roles">
+    <h3>Built for every kind of creative</h3>
+    <div class="roles-wrap">
+      <span class="role-pill">Photographer</span>
+      <span class="role-pill">Videographer</span>
+      <span class="role-pill">Film Director</span>
+      <span class="role-pill">Film Editor</span>
+      <span class="role-pill">Art Director</span>
+      <span class="role-pill">Creative Director</span>
+      <span class="role-pill">Stylist</span>
+      <span class="role-pill">Makeup Artist</span>
+      <span class="role-pill">Hair Stylist</span>
+      <span class="role-pill">Fashion Designer</span>
+      <span class="role-pill">Model</span>
+      <span class="role-pill">Graphic Designer</span>
+      <span class="role-pill">Illustrator</span>
+      <span class="role-pill">Musician</span>
+      <span class="role-pill">Music Producer</span>
+      <span class="role-pill">Dancer</span>
+      <span class="role-pill">Actor</span>
+      <span class="role-pill">Content Creator</span>
+      <span class="role-pill">Copywriter</span>
+      <span class="role-pill">Muralist</span>
+      <span class="role-pill">Set Designer</span>
+      <span class="role-pill">Producer</span>
+      <span class="role-pill">& many more</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <!-- Small icon in footer -->
+    <div style="margin: 0 auto 20px; width: 40px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="9" fill="#111"/>
+        <line x1="20" y1="9" x2="12" y2="21" stroke="rgba(245,245,240,0.2)" stroke-width="0.75"/>
+        <line x1="20" y1="9" x2="28" y2="21" stroke="rgba(245,245,240,0.2)" stroke-width="0.75"/>
+        <line x1="12" y1="21" x2="28" y2="21" stroke="rgba(245,245,240,0.15)" stroke-width="0.75"/>
+        <circle cx="20" cy="9" r="2" fill="#f5f5f0"/>
+        <circle cx="12" cy="21" r="1.5" fill="rgba(245,245,240,0.55)"/>
+        <circle cx="28" cy="21" r="1.5" fill="rgba(245,245,240,0.55)"/>
+        <text x="20" y="33" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-weight="900" font-size="9" fill="#f5f5f0">Tribes</text>
+      </svg>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/support">Support</a>
+    </div>
+    <p class="footer-copy">© 2026 Tribes. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const cards = document.querySelectorAll('.feature-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(card => observer.observe(card));
+  </script>
+
 </body>
 </html>
