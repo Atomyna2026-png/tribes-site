@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — Tribes</title>
+<meta name="description" content="Help with your Tribes account, subscriptions, reporting, and more.">
+<style>
+  :root{
+    --bg:#000; --text:#fff;
+    --sub:rgba(255,255,255,.5); --faint:rgba(255,255,255,.3);
+    --card:#141414; --card2:#1a1a1a;
+    --hair:rgba(255,255,255,.07);
+    --green:#30d158;
+    --r-lg:16px; --r-md:14px;
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:#fff;color:#000}
+  :focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(0,0,0,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--hair)}
+  .nav-in{max-width:1120px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .wordmark{font-size:19px;font-weight:800;letter-spacing:-.02em}
+  nav a.back{font-size:14px;font-weight:500;color:var(--sub)}
+  nav a.back:hover{color:#fff}
+
+  header{padding:130px 0 44px}
+  h1{font-size:clamp(30px,4.5vw,44px);font-weight:800;letter-spacing:-.03em;margin-top:14px}
+  header p{font-size:15px;line-height:1.6;color:var(--sub);margin-top:14px;max-width:52ch}
+
+  .contact{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:22px;margin:36px 0 56px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .contact div b{font-size:15px;font-weight:700;display:block;margin-bottom:4px}
+  .contact div span{font-size:13px;color:var(--sub)}
+  .contact a{background:#fff;color:#000;font-size:14px;font-weight:700;padding:12px 20px;border-radius:var(--r-lg);white-space:nowrap;transition:opacity .2s}
+  .contact a:hover{opacity:.85}
+
+  h2{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:44px 0 14px}
+  details{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-md);margin-bottom:10px;overflow:hidden}
+  summary{list-style:none;cursor:pointer;padding:16px 18px;font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:18px;font-weight:400;color:var(--faint);flex:none;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 18px 16px;font-size:13.5px;line-height:1.65;color:var(--sub)}
+  details p b{color:rgba(255,255,255,.85);font-weight:600}
+
+  footer{border-top:1px solid var(--hair);padding:36px 0;margin-top:72px}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .foot-links{display:flex;gap:22px}
+  .foot-links a{font-size:13px;color:var(--sub)}
+  .foot-links a:hover{color:#fff}
+  .copy{font-size:12px;color:var(--faint)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="wordmark" href="index.html">Tribes</a>
+    <a class="back" href="index.html">← Back to Tribes</a>
+  </div>
+</nav>
+
+<header class="wrap">
+  <span class="eyebrow">Support</span>
+  <h1>How can we help?</h1>
+  <p>Answers to the most common questions about Tribes — your account, subscriptions, and keeping the community safe. Can't find what you need? Email us and a human will reply.</p>
+
+  <div class="contact">
+    <div>
+      <b>Contact support</b>
+      <span>We aim to reply within one business day.</span>
+    </div>
+    <a href="mailto:support@tribes.network">support@tribes.network</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h2>Account</h2>
+  <details>
+    <summary>How do I delete my account?</summary>
+    <p>Open Tribes and go to <b>Settings → Delete Account</b>. You'll be asked to confirm your password, then your account and personal data are permanently removed. Deletion is irreversible — your posts, messages, projects, and profile are gone for good.</p>
+  </details>
+  <details>
+    <summary>I didn't get my verification email.</summary>
+    <p>Check your spam folder first. You can resend it from the banner at the top of the app, or from <b>Settings</b>. If it still doesn't arrive, email us and we'll sort it out.</p>
+  </details>
+  <details>
+    <summary>How do I change my profile, roles, or availability?</summary>
+    <p>Tap your profile, then <b>Edit Profile</b>. Roles, bio, photo, location, and your "open for collabs" status can all be changed there — updates are visible to the community immediately.</p>
+  </details>
+
+  <h2>Tribes Pro</h2>
+  <details>
+    <summary>How do I cancel or manage my subscription?</summary>
+    <p>Subscriptions are billed through Apple. Open your iPhone's <b>Settings → [your name] → Subscriptions → Tribes</b> to change plans or cancel. Canceling keeps Pro active until the end of the current billing period. Deleting the app does <b>not</b> cancel a subscription.</p>
+  </details>
+  <details>
+    <summary>I bought Pro but it's not showing up.</summary>
+    <p>In the Tribes paywall, tap <b>Restore Purchases</b> — this re-syncs your subscription from the App Store, including on a new device. If it still doesn't appear after a minute, email us with the Apple receipt.</p>
+  </details>
+  <details>
+    <summary>How do refunds work?</summary>
+    <p>Payments are processed by Apple, so refund requests go through Apple at <b>reportaproblem.apple.com</b>. Sign in with the Apple ID you purchased with, find the Tribes charge, and choose "Request a refund."</p>
+  </details>
+
+  <h2>Safety</h2>
+  <details>
+    <summary>How do I report a post or a person?</summary>
+    <p>Use the <b>report</b> option on any profile or piece of content. Reports go straight to our moderation queue — we review them and act on violations, typically within 24 hours. Reporting is anonymous; the person is never told who reported them.</p>
+  </details>
+  <details>
+    <summary>How does blocking work?</summary>
+    <p>Blocking someone stops them from messaging you or sending you collab requests. You can block from any profile, and unblock later from your settings if you change your mind.</p>
+  </details>
+  <details>
+    <summary>What content isn't allowed on Tribes?</summary>
+    <p>Anything illegal, hateful, harassing, pornographic, violent, or deceptive — the full list is in our <b><a href="terms.html" style="text-decoration:underline">Terms of Use</a></b>. Tribes is a professional community and we enforce a zero-tolerance policy, up to and including account removal.</p>
+  </details>
+
+  <h2>Data &amp; privacy</h2>
+  <details>
+    <summary>What data do you collect, and can I get a copy?</summary>
+    <p>Everything we collect and why is laid out in our <b><a href="privacy.html" style="text-decoration:underline">Privacy Policy</a></b>. For access, correction, or export requests, email <b>support@tribes.network</b> and we'll respond within the timeframe required by law.</p>
+  </details>
+  <details>
+    <summary>Do you sell my data or show ads?</summary>
+    <p>No. Tribes doesn't sell personal information, doesn't run third-party ads, and doesn't track you across other apps. The business is the Pro subscription — you're the customer, not the product.</p>
+  </details>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="wordmark" style="font-size:16px">Tribes</span>
+    <div class="foot-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:support@tribes.network">Contact</a>
+    </div>
+    <span class="copy">© 2026 Tribes. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>

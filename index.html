@@ -1,1486 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tribes — For Creatives Who Collaborate</title>
-  <meta name="description" content="Tribes is a social platform built for the creative industry. Discover collaborators, share your work, and build your inner circle." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tribes — For Creatives Who Collaborate</title>
+<meta name="description" content="Tribes is a private community app for the creative industry. Discover collaborators, share your work, and build your inner circle. Coming to the App Store.">
+<style>
+  :root{
+    --bg:#000;
+    --text:#fff;
+    --sub:rgba(255,255,255,.5);
+    --faint:rgba(255,255,255,.3);
+    --ghost:rgba(255,255,255,.25);
+    --card:#141414;          /* Color(white: 0.08) */
+    --card2:#1a1a1a;         /* Color(white: 0.10) */
+    --hair:rgba(255,255,255,.07);
+    --hair2:rgba(255,255,255,.12);
+    --green:#30d158;
+    --r-lg:16px; --r-md:14px; --r-sm:12px;
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:#fff;color:#000}
+  :focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── Nav ─────────────────────────────────────────── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(0,0,0,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--hair)}
+  .nav-in{max-width:1120px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .wordmark{font-size:19px;font-weight:800;letter-spacing:-.02em}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{font-size:14px;font-weight:500;color:var(--sub);transition:color .2s}
+  .nav-links a:hover{color:#fff}
+  .nav-cta{background:#fff;color:#000 !important;font-size:14px;font-weight:700;padding:9px 18px;border-radius:12px;transition:opacity .2s}
+  .nav-cta:hover{opacity:.85}
 
-    :root {
-      --black:    #080808;
-      --black-2:  #0d0d0d;
-      --white:    #f5f5f0;
-      --dim:      rgba(245,245,240,0.55);
-      --dimmer:   rgba(245,245,240,0.30);
-      --faint:    rgba(245,245,240,0.10);
-      --border:   rgba(245,245,240,0.08);
-      --gold:     #c9a96e;
-      --gold-dim: rgba(201,169,110,0.5);
+  /* ── Hero ────────────────────────────────────────── */
+  .hero{padding:140px 0 90px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+  h1{font-size:clamp(40px,5.6vw,68px);font-weight:800;letter-spacing:-.035em;line-height:1.03;margin:18px 0 20px}
+  h1 .dim{color:var(--faint)}
+  .hero p.lead{font-size:17px;line-height:1.6;color:var(--sub);max-width:46ch;margin-bottom:32px}
 
-      --serif: 'Fraunces', 'Playfair Display', Georgia, serif;
-      --sans:  'DM Sans', system-ui, sans-serif;
-      --mono:  'DM Mono', ui-monospace, monospace;
-    }
+  .waitlist{display:flex;gap:10px;max-width:440px}
+  .waitlist input{flex:1;background:var(--card2);border:1px solid var(--hair);border-radius:var(--r-md);color:#fff;font-family:var(--sans);font-size:15px;padding:15px 16px;transition:border-color .2s;min-width:0}
+  .waitlist input::placeholder{color:rgba(255,255,255,.25)}
+  .waitlist input:focus{outline:none;border-color:var(--ghost)}
+  .waitlist button{background:#fff;color:#000;border:0;border-radius:var(--r-lg);font-family:var(--sans);font-size:15px;font-weight:700;padding:15px 22px;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+  .waitlist button:hover{opacity:.85}
+  .form-msg{font-size:13px;color:var(--sub);margin-top:12px;min-height:18px}
+  .form-msg.ok{color:var(--green)}
+  .hero-note{display:flex;gap:8px;align-items:center;margin-top:22px}
+  .hero-note .pill{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--green);background:rgba(48,209,88,.12);padding:3px 8px;border-radius:99px}
+  .hero-note span:last-child{font-size:13px;color:var(--faint)}
 
-    html { scroll-behavior: smooth; }
+  /* ── Phone ───────────────────────────────────────── */
+  .phone-col{display:flex;flex-direction:column;align-items:center;gap:18px}
+  .phone{width:300px;background:#050505;border:1px solid var(--hair2);border-radius:44px;padding:10px;box-shadow:0 40px 120px rgba(0,0,0,.9)}
+  .screen{background:#000;border-radius:36px;overflow:hidden;height:600px;position:relative}
+  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:26px;background:#0a0a0a;border-radius:99px;z-index:5}
+  .app{position:absolute;inset:0;padding:52px 16px 16px;display:none;flex-direction:column;gap:12px;overflow:hidden}
+  .app.on{display:flex;animation:fadeUp .35s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: var(--sans);
-      font-weight: 300;
-      min-height: 100vh;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      cursor: none;
-    }
+  .aprow{display:flex;align-items:center;gap:10px}
+  .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#2a2a2a,#4a4a4a);flex:none;position:relative}
+  .av.ring::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:1.5px solid #fff}
+  .av.lg{width:52px;height:52px}
+  .aname{font-size:14px;font-weight:600;display:flex;align-items:center;gap:5px}
+  .seal{width:12px;height:12px;flex:none}
+  .arole{font-size:11px;color:var(--sub)}
+  .open-pill{font-size:8px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--green);background:rgba(48,209,88,.12);padding:2px 6px;border-radius:99px}
+  .acard{background:var(--card);border-radius:var(--r-lg);padding:14px}
+  .alabel{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .aimg{border-radius:var(--r-sm);height:150px;background:linear-gradient(160deg,#1c1c1c 0%,#333 55%,#181818 100%);margin:10px 0}
+  .aimg.b{background:linear-gradient(200deg,#252525,#3d3d3d 60%,#151515)}
+  .ameta{font-size:11px;color:var(--sub)}
+  .atext{font-size:12px;line-height:1.5;color:rgba(255,255,255,.85)}
+  .abtn{background:#fff;color:#000;border-radius:var(--r-lg);font-size:13px;font-weight:700;text-align:center;padding:13px;margin-top:auto}
+  .abtn.ghost{background:transparent;color:#fff;border:1px solid var(--ghost)}
+  .afield{background:var(--card2);border:1px solid var(--hair);border-radius:var(--r-md);padding:12px;font-size:12px;color:rgba(255,255,255,.25);min-height:88px}
+  .astat-row{display:flex;gap:8px}
+  .astat{flex:1;background:var(--card);border-radius:var(--r-md);padding:10px;text-align:center}
+  .astat b{display:block;font-size:16px;font-weight:800}
+  .astat span{font-size:9px;color:var(--sub);letter-spacing:.05em;text-transform:uppercase}
+  .aviewer{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--hair)}
+  .aviewer:last-child{border:0}
+  .aviewer .av{width:28px;height:28px}
+  .aviewer span{font-size:12px;font-weight:500}
+  .aviewer em{font-size:10px;font-style:normal;color:var(--faint);margin-left:auto}
 
-    @media (pointer: coarse) { body { cursor: auto; } }
+  .phone-tabs{display:flex;gap:8px}
+  .phone-tabs button{background:var(--card);border:1px solid var(--hair);border-radius:99px;color:var(--sub);font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 16px;cursor:pointer;transition:all .2s}
+  .phone-tabs button.on{background:#fff;color:#000;border-color:#fff}
 
-    a, button, input { cursor: none; }
-    @media (pointer: coarse) { a, button, input { cursor: pointer; } }
-    input { cursor: none; }
-    @media (pointer: coarse) { input { cursor: text; } }
+  /* ── Sections ────────────────────────────────────── */
+  section{padding:90px 0;border-top:1px solid var(--hair)}
+  .sec-head{max-width:560px;margin-bottom:52px}
+  h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-.025em;line-height:1.12;margin-top:14px}
+  .sec-head p{font-size:15px;line-height:1.6;color:var(--sub);margin-top:14px}
 
-    /* ─────────────────────────── CUSTOM CURSOR ─────────────────────────── */
-    .cursor-dot, .cursor-ring {
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      mix-blend-mode: difference;
-    }
-    .cursor-dot {
-      width: 6px; height: 6px;
-      background: var(--white);
-      border-radius: 50%;
-      transition: opacity 0.2s;
-    }
-    .cursor-ring {
-      width: 36px; height: 36px;
-      border: 1px solid var(--white);
-      border-radius: 50%;
-      transition: transform 0.15s ease-out, width 0.25s, height 0.25s, opacity 0.2s;
-    }
-    .cursor-ring.hover { width: 60px; height: 60px; }
-    @media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .fcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:22px;transition:background .25s,transform .25s}
+  .fcard:hover{background:var(--card2);transform:translateY(-2px)}
+  .fcard .ic{width:38px;height:38px;border-radius:var(--r-sm);background:var(--card2);border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .fcard .ic svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .fcard h3{font-size:15px;font-weight:700;margin-bottom:7px}
+  .fcard p{font-size:13px;line-height:1.55;color:var(--sub)}
+  .fcard .pro-tag{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#000;background:#fff;padding:2px 6px;border-radius:99px;margin-left:6px;vertical-align:2px}
 
-    /* ─────────────────────────── GRAIN OVERLAY ─────────────────────────── */
-    .grain {
-      position: fixed; inset: 0;
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0.06;
-      mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+  /* roles strip */
+  .roles{overflow:hidden;padding:56px 0}
+  .marquee{display:flex;gap:10px;width:max-content;animation:slide 36s linear infinite}
+  .roles:hover .marquee{animation-play-state:paused}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  .role{font-size:12px;font-weight:600;color:var(--sub);background:var(--card);border:1px solid var(--hair);border-radius:99px;padding:9px 16px;white-space:nowrap}
 
-    /* ─────────────────────────── NAV ─────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      padding: 20px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-      background: rgba(8,8,8,0.4);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.4s, background 0.4s;
-    }
-    nav.scrolled { border-bottom-color: var(--border); background: rgba(8,8,8,0.7); }
-    .nav-logo {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 900;
-      font-size: 22px;
-      letter-spacing: -0.5px;
-    }
-    .nav-cta {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
-      padding: 10px 18px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .nav-cta:hover { background: rgba(245,245,240,0.06); border-color: var(--gold-dim); }
+  /* pro */
+  .pro-band{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .pro-list{display:flex;flex-direction:column;gap:0}
+  .pro-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+  .pro-item:last-child{border:0}
+  .pro-item b{font-size:14px;font-weight:700;flex:none;width:170px}
+  .pro-item span{font-size:13px;color:var(--sub);line-height:1.5}
 
-    /* ─────────────────────────── HERO ─────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      overflow: hidden;
-    }
-    #constellation {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-    }
-    .hero-glow {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(201,169,110,0.08), transparent 70%),
-        radial-gradient(ellipse 80% 60% at 30% 80%, rgba(140,100,200,0.04), transparent 60%),
-        radial-gradient(ellipse 80% 60% at 80% 20%, rgba(200,100,140,0.03), transparent 60%);
-      z-index: 1;
-      pointer-events: none;
-      animation: glowDrift 22s ease-in-out infinite alternate;
-    }
-    @keyframes glowDrift {
-      0%   { transform: translate(0,0) scale(1); opacity: 0.9; }
-      100% { transform: translate(-3%, 2%) scale(1.06); opacity: 1; }
-    }
+  /* final cta */
+  .final{text-align:center;padding:110px 0}
+  .final .waitlist{margin:32px auto 0}
+  .final .form-msg{text-align:center}
 
-    .hero-content { position: relative; z-index: 2; max-width: 720px; }
+  footer{border-top:1px solid var(--hair);padding:40px 0}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .foot-links{display:flex;gap:22px}
+  .foot-links a{font-size:13px;color:var(--sub);transition:color .2s}
+  .foot-links a:hover{color:#fff}
+  .copy{font-size:12px;color:var(--faint)}
 
-    .app-icon {
-      width: 96px; height: 96px;
-      border-radius: 22px;
-      margin: 0 auto 32px;
-      box-shadow: 0 0 0 1px var(--border), 0 30px 60px rgba(0,0,0,0.7), 0 0 80px rgba(201,169,110,0.08);
-      animation: fadeUp 1s ease both, iconFloat 5s ease-in-out 1s infinite alternate;
-    }
-    @keyframes iconFloat {
-      0%   { transform: translateY(0); }
-      100% { transform: translateY(-6px); }
-    }
-    .app-icon svg { width: 100%; height: 100%; display: block; }
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
 
-    .eyebrow {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 1s 0.1s ease both;
-    }
-    .eyebrow::before, .eyebrow::after {
-      content: '';
-      display: inline-block;
-      width: 24px; height: 1px;
-      background: var(--gold-dim);
-      vertical-align: middle;
-      margin: 0 14px;
-    }
-
-    .logo {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 900;
-      font-variation-settings: "opsz" 144;
-      font-size: clamp(80px, 16vw, 180px);
-      line-height: 0.9;
-      letter-spacing: -0.04em;
-      color: var(--white);
-      opacity: 0;
-      animation: fadeUp 1.2s 0.2s ease both;
-    }
-
-    .tagline {
-      font-family: var(--sans);
-      font-weight: 300;
-      font-size: clamp(15px, 2vw, 18px);
-      color: var(--dim);
-      margin-top: 24px;
-      max-width: 480px;
-      margin-left: auto; margin-right: auto;
-      line-height: 1.6;
-      opacity: 0;
-      animation: fadeUp 1s 0.4s ease both;
-    }
-    .tagline em {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--white);
-    }
-
-    /* Waitlist form */
-    .waitlist {
-      margin-top: 40px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      max-width: 440px;
-      margin-left: auto; margin-right: auto;
-      padding: 6px;
-      background: rgba(245,245,240,0.04);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      backdrop-filter: blur(12px);
-      opacity: 0;
-      animation: fadeUp 1s 0.5s ease both;
-      transition: border-color 0.3s;
-    }
-    .waitlist:focus-within { border-color: var(--gold-dim); }
-    .waitlist input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--white);
-      font-family: var(--sans);
-      font-size: 14px;
-      padding: 10px 18px;
-    }
-    .waitlist input::placeholder { color: var(--dimmer); }
-    .waitlist button {
-      background: var(--white);
-      color: var(--black);
-      border: none;
-      padding: 12px 24px;
-      border-radius: 100px;
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: background 0.3s, color 0.3s;
-      white-space: nowrap;
-    }
-    .waitlist button:hover { background: var(--gold); }
-    .waitlist.success { border-color: var(--gold); }
-    .waitlist-success-msg {
-      margin-top: 16px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0;
-      transition: opacity 0.4s;
-      min-height: 14px;
-    }
-    .waitlist-success-msg.show { opacity: 1; }
-
-    .waitlist-count {
-      margin-top: 28px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--dimmer);
-      opacity: 0;
-      animation: fadeUp 1s 0.7s ease both;
-    }
-    .waitlist-count strong {
-      color: var(--white);
-      font-weight: 400;
-    }
-    .pulse-dot {
-      display: inline-block;
-      width: 6px; height: 6px;
-      background: var(--gold);
-      border-radius: 50%;
-      margin-right: 10px;
-      animation: pulse 2s ease-in-out infinite;
-      vertical-align: middle;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(201,169,110,0.6); }
-      50%      { opacity: 0.6; box-shadow: 0 0 0 6px rgba(201,169,110,0); }
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-      animation: fadeUp 1s 1s ease both;
-    }
-    .scroll-hint span {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--dimmer);
-    }
-    .scroll-line {
-      width: 1px; height: 40px;
-      background: linear-gradient(to bottom, var(--white), transparent);
-      animation: scrollPulse 2.4s ease-in-out infinite;
-    }
-    @keyframes scrollPulse { 0%,100% { opacity: 0.2; } 50% { opacity: 0.7; } }
-
-    /* ─────────────────────────── DISCIPLINE MARQUEE ─────────────────────────── */
-    .marquee-section {
-      padding: 60px 0;
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--black-2);
-    }
-    .marquee {
-      display: flex;
-      gap: 24px;
-      width: max-content;
-      animation: marqueeScroll 50s linear infinite;
-    }
-    .marquee.reverse { animation-direction: reverse; animation-duration: 60s; margin-top: 24px; }
-    .marquee:hover { animation-play-state: paused; }
-
-    @keyframes marqueeScroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .disc-card {
-      flex-shrink: 0;
-      width: 280px; height: 180px;
-      border-radius: 14px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .disc-card::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at top right, rgba(255,255,255,0.08), transparent 60%);
-      pointer-events: none;
-    }
-    .disc-name {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 900;
-      font-size: 28px;
-      line-height: 1;
-      color: var(--white);
-      mix-blend-mode: difference;
-      filter: invert(1);
-    }
-    .disc-meta {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.5);
-      mix-blend-mode: difference;
-      filter: invert(1);
-    }
-    .disc-num {
-      position: absolute;
-      bottom: 18px; right: 22px;
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 60px;
-      font-weight: 700;
-      opacity: 0.18;
-      color: var(--white);
-      line-height: 1;
-    }
-
-    /* Discipline color palettes — sharp gradient washes */
-    .disc-photo    { background: linear-gradient(135deg, #2d3e50, #1a252f); }
-    .disc-film     { background: linear-gradient(135deg, #7a4e2d, #3d2818); }
-    .disc-fashion  { background: linear-gradient(135deg, #b08070, #5c3a3a); }
-    .disc-music    { background: linear-gradient(135deg, #3d2a4d, #1f1530); }
-    .disc-design   { background: linear-gradient(135deg, #5a6b58, #2d3a30); }
-    .disc-art      { background: linear-gradient(135deg, #a06848, #4a2d20); }
-    .disc-direct   { background: linear-gradient(135deg, #5a6068, #2a2e34); }
-    .disc-style    { background: linear-gradient(135deg, #b39668, #6e5a3c); }
-
-    /* ─────────────────────────── INTRO ─────────────────────────── */
-    .intro {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 140px 24px 100px;
-      text-align: center;
-    }
-    .section-label {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 32px;
-      padding: 0 14px;
-      position: relative;
-    }
-    .section-label::before, .section-label::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 32px; height: 1px;
-      background: var(--gold-dim);
-    }
-    .section-label::before { right: 100%; }
-    .section-label::after { left: 100%; }
-
-    .intro h2 {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 700;
-      font-variation-settings: "opsz" 144;
-      font-size: clamp(36px, 6vw, 60px);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      margin-bottom: 32px;
-    }
-    .intro h2 .accent {
-      color: var(--gold);
-      position: relative;
-      display: inline-block;
-    }
-    .intro p {
-      font-family: var(--sans);
-      font-weight: 300;
-      font-size: 17px;
-      color: var(--dim);
-      line-height: 1.8;
-      max-width: 580px;
-      margin: 0 auto;
-    }
-
-    /* ─────────────────────────── MANIFESTO BAND ─────────────────────────── */
-    .manifesto {
-      position: relative;
-      padding: 100px 24px 120px;
-      text-align: center;
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .manifesto::before {
-      content: 'Tribes';
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 900;
-      font-size: clamp(180px, 32vw, 460px);
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      color: rgba(255,255,255,0.025);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      line-height: 0.9;
-    }
-    .manifesto-inner { position: relative; max-width: 760px; margin: 0 auto; }
-    .manifesto h3 {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(28px, 4.5vw, 46px);
-      line-height: 1.25;
-      color: var(--white);
-      margin-bottom: 28px;
-      letter-spacing: -0.01em;
-    }
-    .manifesto h3 .em {
-      font-weight: 900;
-      color: var(--gold);
-    }
-    .manifesto p {
-      font-family: var(--sans);
-      font-weight: 300;
-      font-size: 15px;
-      color: var(--dim);
-      line-height: 1.8;
-      max-width: 520px;
-      margin: 0 auto;
-    }
-
-    /* ─────────────────────────── FEATURES ─────────────────────────── */
-    .features {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 140px 24px 100px;
-    }
-    .features-head {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-    .features-head h3 {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 700;
-      font-size: clamp(32px, 5vw, 52px);
-      color: var(--white);
-      margin-top: 24px;
-      letter-spacing: -0.02em;
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
-    }
-    @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
-
-    .feature-card {
-      padding: 48px 36px;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease, background 0.5s;
-    }
-    .feature-card.visible { opacity: 1; transform: translateY(0); }
-    .feature-card:hover { background: rgba(245,245,240,0.025); }
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .feature-card:hover::before { opacity: 0.7; }
-    .feature-icon {
-      width: 36px; height: 36px;
-      margin-bottom: 28px;
-      color: var(--white);
-      opacity: 0.85;
-      transition: color 0.4s, transform 0.5s;
-    }
-    .feature-card:hover .feature-icon { color: var(--gold); transform: translateY(-2px); }
-    .feature-num {
-      position: absolute;
-      top: 36px; right: 32px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--dimmer);
-    }
-    .feature-title {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 700;
-      font-size: 24px;
-      color: var(--white);
-      margin-bottom: 16px;
-      line-height: 1.2;
-      letter-spacing: -0.01em;
-    }
-    .feature-desc {
-      font-family: var(--sans);
-      font-weight: 300;
-      font-size: 14px;
-      color: var(--dim);
-      line-height: 1.75;
-    }
-
-    /* ─────────────────────────── APP PREVIEW ─────────────────────────── */
-    .app-preview {
-      padding: 100px 24px 140px;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    @media (max-width: 900px) {
-      .app-preview { grid-template-columns: 1fr; gap: 60px; text-align: center; }
-    }
-    .app-preview-text h3 {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 700;
-      font-size: clamp(32px, 5vw, 48px);
-      line-height: 1.1;
-      color: var(--white);
-      margin-top: 24px;
-      margin-bottom: 24px;
-      letter-spacing: -0.02em;
-    }
-    .app-preview-text p {
-      font-family: var(--sans);
-      font-weight: 300;
-      font-size: 16px;
-      color: var(--dim);
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-    .preview-bullets {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .preview-bullets li {
-      font-family: var(--sans);
-      font-size: 14px;
-      color: var(--white);
-      padding-left: 28px;
-      position: relative;
-      line-height: 1.5;
-    }
-    .preview-bullets li::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px;
-      width: 14px; height: 1px;
-      background: var(--gold);
-    }
-    .phone-wrap {
-      display: flex;
-      justify-content: center;
-      perspective: 1200px;
-    }
-    .phone {
-      width: 280px;
-      filter: drop-shadow(0 50px 60px rgba(0,0,0,0.6)) drop-shadow(0 0 80px rgba(201,169,110,0.08));
-      animation: phoneFloat 6s ease-in-out infinite alternate;
-      transform-style: preserve-3d;
-    }
-    @keyframes phoneFloat {
-      0%   { transform: rotateY(-8deg) rotateX(2deg) translateY(0); }
-      100% { transform: rotateY(-4deg) rotateX(0deg) translateY(-12px); }
-    }
-
-    /* ─────────────────────────── STATS ─────────────────────────── */
-    .stats {
-      padding: 80px 24px 100px;
-      max-width: 1200px;
-      margin: 0 auto;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-    @media (max-width: 700px) { .stats { grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 60px 24px; } }
-    .stat {
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s, transform 0.8s;
-    }
-    .stat.visible { opacity: 1; transform: translateY(0); }
-    .stat-num {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 900;
-      font-variation-settings: "opsz" 144;
-      font-size: clamp(48px, 7vw, 88px);
-      line-height: 1;
-      color: var(--white);
-      letter-spacing: -0.03em;
-    }
-    .stat-num .plus { color: var(--gold); font-weight: 400; }
-    .stat-label {
-      margin-top: 14px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--dim);
-    }
-
-    /* ─────────────────────────── ROLES TICKER ─────────────────────────── */
-    .roles {
-      padding: 120px 0;
-      overflow: hidden;
-    }
-    .roles-head {
-      text-align: center;
-      margin-bottom: 64px;
-      padding: 0 24px;
-    }
-    .roles-head h3 {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 700;
-      font-size: clamp(32px, 5vw, 48px);
-      color: var(--white);
-      margin-top: 24px;
-      letter-spacing: -0.02em;
-    }
-    .ticker {
-      display: flex;
-      gap: 14px;
-      width: max-content;
-      animation: marqueeScroll 60s linear infinite;
-      margin-bottom: 14px;
-    }
-    .ticker.reverse { animation-direction: reverse; animation-duration: 70s; }
-    .ticker.slow { animation-duration: 80s; }
-
-    .role-pill {
-      flex-shrink: 0;
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 400;
-      font-size: 22px;
-      color: var(--white);
-      padding: 14px 26px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      letter-spacing: -0.01em;
-      transition: background 0.3s, border-color 0.3s, color 0.3s;
-      white-space: nowrap;
-    }
-    .role-pill:hover { background: var(--white); color: var(--black); border-color: var(--white); }
-    .role-pill.gold { color: var(--gold); border-color: var(--gold-dim); }
-    .role-dot {
-      display: inline-block;
-      width: 4px; height: 4px;
-      background: var(--gold);
-      border-radius: 50%;
-      vertical-align: middle;
-      margin: 0 4px 4px 4px;
-    }
-
-    /* ─────────────────────────── FINAL CTA ─────────────────────────── */
-    .final-cta {
-      padding: 140px 24px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    .final-cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,169,110,0.06), transparent 70%);
-      pointer-events: none;
-    }
-    .final-cta-inner { position: relative; max-width: 680px; margin: 0 auto; }
-    .final-cta h3 {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 700;
-      font-size: clamp(40px, 6vw, 72px);
-      line-height: 1.05;
-      color: var(--white);
-      margin-top: 24px;
-      margin-bottom: 24px;
-      letter-spacing: -0.02em;
-    }
-    .final-cta p {
-      font-family: var(--sans);
-      font-size: 16px;
-      color: var(--dim);
-      line-height: 1.7;
-      margin-bottom: 40px;
-    }
-    .final-cta .waitlist { margin-top: 0; }
-
-    /* ─────────────────────────── FOOTER ─────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 64px 24px 40px;
-      text-align: center;
-    }
-    .footer-icon { margin: 0 auto 28px; width: 44px; height: 44px; display: block; }
-    .footer-tagline {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 14px;
-      color: var(--dim);
-      margin-bottom: 32px;
-    }
-    .footer-links {
-      display: flex;
-      gap: 32px;
-      justify-content: center;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
-    }
-    .footer-links a {
-      color: var(--dim);
-      text-decoration: none;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-copy {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--dimmer);
-    }
-
-    /* ─────────────────────────── ANIMATIONS ─────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ─────────────────────────── MOBILE ─────────────────────────── */
-    @media (max-width: 600px) {
-      nav { padding: 16px 20px; }
-      .nav-cta { padding: 8px 14px; font-size: 10px; }
-      .hero { padding: 100px 20px 80px; }
-      .waitlist { flex-direction: column; padding: 16px; border-radius: 20px; gap: 12px; }
-      .waitlist input { width: 100%; text-align: center; }
-      .waitlist button { width: 100%; padding: 14px; }
-      .intro, .features, .stats, .app-preview, .final-cta, .manifesto { padding-left: 20px; padding-right: 20px; }
-      .disc-card { width: 220px; height: 150px; }
-    }
-  </style>
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important}
+    .reveal{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+  @media (max-width: 900px){
+    .hero{padding:120px 0 64px}
+    .hero-grid{grid-template-columns:1fr;gap:52px}
+    .phone-col{order:2}
+    .grid{grid-template-columns:1fr 1fr}
+    .pro-band{grid-template-columns:1fr}
+  }
+  @media (max-width: 560px){
+    .nav-links a:not(.nav-cta){display:none}
+    .grid{grid-template-columns:1fr}
+    .waitlist{flex-direction:column}
+    .phone{width:280px}
+    .screen{height:560px}
+    .pro-item b{width:auto}
+    .pro-item{flex-direction:column;gap:4px}
+  }
+</style>
 </head>
 <body>
 
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-  <div class="grain"></div>
+<nav>
+  <div class="nav-in">
+    <a class="wordmark" href="#top">Tribes</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#pro">Pro</a>
+      <a href="support.html">Support</a>
+      <a class="nav-cta" href="#join">Get notified</a>
+    </div>
+  </div>
+</nav>
 
-  <!-- ═══════════════════════════ NAV ═══════════════════════════ -->
-  <nav id="nav">
-    <div class="nav-logo">Tribes</div>
-    <a href="#waitlist" class="nav-cta">Join the waitlist</a>
-  </nav>
+<header class="hero wrap" id="top">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">A private community for creatives</span>
+      <h1>Find the people<br>who make the work<span class="dim">.</span></h1>
+      <p class="lead">Tribes is where photographers, directors, stylists, musicians and designers discover collaborators, share their work, and build an inner circle — without the noise.</p>
 
-  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
-  <section class="hero">
-    <canvas id="constellation"></canvas>
-    <div class="hero-glow"></div>
-
-    <div class="hero-content">
-
-      <div class="app-icon">
-        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-          <rect width="120" height="120" rx="22" fill="#080808"/>
-          <line x1="60" y1="30" x2="38" y2="64" stroke="rgba(245,245,240,0.22)" stroke-width="0.75"/>
-          <line x1="60" y1="30" x2="82" y2="64" stroke="rgba(245,245,240,0.22)" stroke-width="0.75"/>
-          <line x1="38" y1="64" x2="82" y2="64" stroke="rgba(245,245,240,0.16)" stroke-width="0.75"/>
-          <circle cx="49" cy="47" r="1.4" fill="rgba(245,245,240,0.4)"/>
-          <circle cx="71" cy="47" r="1.4" fill="rgba(245,245,240,0.4)"/>
-          <circle cx="60" cy="30" r="4" fill="#f5f5f0"/>
-          <circle cx="38" cy="64" r="3" fill="rgba(245,245,240,0.7)"/>
-          <circle cx="82" cy="64" r="3" fill="rgba(245,245,240,0.7)"/>
-          <text x="60" y="94" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="900" font-size="20" fill="#f5f5f0">Tribes</text>
-        </svg>
-      </div>
-
-      <div class="eyebrow">A new social platform</div>
-
-      <h1 class="logo">Tribes</h1>
-
-      <p class="tagline">For the photographers, directors, stylists and musicians who build the world's <em>creative work</em> — together.</p>
-
-      <form class="waitlist" id="waitlistForm" autocomplete="off">
-        <input type="email" id="waitlistEmail" placeholder="your@email.com" required aria-label="Email address" />
-        <button type="submit" id="waitlistBtn">Join the waitlist</button>
+      <form class="waitlist" data-form>
+        <input type="email" placeholder="your@email.com" required aria-label="Email address">
+        <button type="submit">Get notified</button>
       </form>
-      <div class="waitlist-success-msg" id="waitlistMsg"></div>
+      <div class="form-msg" data-msg></div>
 
-      <div class="waitlist-count">
-        <span class="pulse-dot"></span>
-        <strong id="waitlistCount">2,847</strong> creatives on the list
+      <div class="hero-note">
+        <span class="pill">iOS</span>
+        <span>Launching on the App Store · 2026</span>
       </div>
     </div>
 
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
+    <div class="phone-col">
+      <div class="phone" aria-label="Preview of the Tribes app">
+        <div class="screen">
+          <div class="notch"></div>
 
-  <!-- ═══════════════════════════ DISCIPLINE MARQUEE ═══════════════════════════ -->
-  <section class="marquee-section" aria-hidden="true">
-    <div class="marquee" id="marquee1">
-      <!-- Cards duplicated in JS to create seamless loop -->
-    </div>
-    <div class="marquee reverse" id="marquee2">
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════ INTRO ═══════════════════════════ -->
-  <section class="intro">
-    <span class="section-label">A platform with a point of view</span>
-    <h2>Where creative professionals find <span class="accent">their people.</span></h2>
-    <p>Tribes is a social platform built for the creative industry — photographers, directors, stylists, musicians, designers and the dozens of disciplines in between. Discover collaborators. Share your work. Build your inner circle.</p>
-  </section>
-
-  <!-- ═══════════════════════════ MANIFESTO ═══════════════════════════ -->
-  <section class="manifesto">
-    <div class="manifesto-inner">
-      <span class="section-label">Manifesto</span>
-      <h3>Built for the people behind <span class="em">the lens,</span> <span class="em">the brush,</span> and <span class="em">the beat.</span></h3>
-      <p>Every feature in Tribes was designed with creative professionals in mind — not influencers, not brands, not noise. Just the people who make the work, finding the people who help them make it better.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════ FEATURES ═══════════════════════════ -->
-  <section class="features" id="features">
-    <div class="features-head">
-      <span class="section-label">What's inside</span>
-      <h3>Nine ways to find your tribe.</h3>
-    </div>
-    <div class="features-grid">
-
-      <div class="feature-card">
-        <span class="feature-num">01</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <rect x="6" y="8" width="24" height="16" rx="2"/>
-          <rect x="10" y="12" width="16" height="2"/>
-          <rect x="10" y="16" width="10" height="2"/>
-          <line x1="6" y1="28" x2="30" y2="28"/>
-        </svg>
-        <h4 class="feature-title">Community Feed</h4>
-        <p class="feature-desc">Share your creative work with the world. Photos, video, audio. Swipe through multi-image galleries and react with more than just a like.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">02</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <rect x="5" y="11" width="20" height="14" rx="2"/>
-          <path d="M25 15 L31 11 V25 L25 21 Z"/>
-        </svg>
-        <h4 class="feature-title">Video Calls</h4>
-        <p class="feature-desc">Connect face-to-face with collaborators in HD video calls — built directly into the app. No third-party tools, no friction.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">03</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <path d="M6 14 L18 6 L30 14"/>
-          <path d="M6 22 L18 30 L30 22"/>
-          <circle cx="18" cy="18" r="2.5"/>
-        </svg>
-        <h4 class="feature-title">Collab Requests</h4>
-        <p class="feature-desc">Send and receive collaboration invites with a personal note. Build creative partnerships with people who match your vision.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">04</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <path d="M6 10 a3 3 0 0 1 3 -3 h18 a3 3 0 0 1 3 3 v12 a3 3 0 0 1 -3 3 h-12 l-6 5 v-5 h0 a3 3 0 0 1 -3 -3 Z"/>
-          <line x1="11" y1="14" x2="25" y2="14"/>
-          <line x1="11" y1="18" x2="20" y2="18"/>
-        </svg>
-        <h4 class="feature-title">Direct Messaging</h4>
-        <p class="feature-desc">Private conversations with your network. Message individuals or your entire inner circle at once. Everything in one place.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">05</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <circle cx="18" cy="18" r="13"/>
-          <circle cx="18" cy="18" r="8"/>
-          <circle cx="18" cy="18" r="3" fill="currentColor" stroke="none"/>
-        </svg>
-        <h4 class="feature-title">Inner Circle</h4>
-        <p class="feature-desc">Curate your closest collaborators into a private inner circle. Share moodboards, start group chats, keep your most trusted network close.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">06</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <rect x="6" y="6" width="11" height="11"/>
-          <rect x="19" y="6" width="11" height="11"/>
-          <rect x="6" y="19" width="11" height="11"/>
-          <rect x="19" y="19" width="11" height="11"/>
-        </svg>
-        <h4 class="feature-title">Projects &amp; Moodboards</h4>
-        <p class="feature-desc">Create and manage creative projects, invite collaborators, and build visual moodboards to align your team around a shared aesthetic.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">07</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <circle cx="16" cy="16" r="10"/>
-          <line x1="23.5" y1="23.5" x2="30" y2="30"/>
-        </svg>
-        <h4 class="feature-title">Discover</h4>
-        <p class="feature-desc">Find talented creatives by role, location, and availability. Filter by photographer, stylist, director, makeup artist — and hundreds more.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">08</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <path d="M9 24 v-7 a9 9 0 0 1 18 0 v7"/>
-          <path d="M6 24 h24"/>
-          <path d="M15 28 a3 3 0 0 0 6 0"/>
-        </svg>
-        <h4 class="feature-title">Smart Notifications</h4>
-        <p class="feature-desc">Granular notification controls. Choose exactly what matters — connections, collabs, messages, reactions — and silence the rest.</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-num">09</span>
-        <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3">
-          <circle cx="18" cy="13" r="5"/>
-          <path d="M7 30 a11 11 0 0 1 22 0"/>
-        </svg>
-        <h4 class="feature-title">Creative Profiles</h4>
-        <p class="feature-desc">Build a rich creative profile that showcases your roles, portfolio, bio, and availability. Let the right people find you.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════ APP PREVIEW ═══════════════════════════ -->
-  <section class="app-preview">
-    <div class="app-preview-text">
-      <span class="section-label">A first look</span>
-      <h3>Designed in the dark, for the people who light it.</h3>
-      <p>Tribes is a dark-first experience — built so your work, not the chrome around it, takes the stage. Cinematic, quiet, considered.</p>
-      <ul class="preview-bullets">
-        <li>Editorial dark theme that lets photography and video breathe</li>
-        <li>One-tap collab requests, right from someone's profile</li>
-        <li>Built-in HD video calls for casting, briefs and creative direction</li>
-        <li>Inner Circle group chats for your tightest collaborators</li>
-      </ul>
-    </div>
-    <div class="phone-wrap">
-      <svg class="phone" viewBox="0 0 280 580" xmlns="http://www.w3.org/2000/svg">
-        <!-- Phone body -->
-        <rect x="4" y="4" width="272" height="572" rx="44" fill="#1a1a1a" stroke="rgba(245,245,240,0.15)" stroke-width="1"/>
-        <rect x="10" y="10" width="260" height="560" rx="38" fill="#080808"/>
-        <!-- Notch -->
-        <rect x="105" y="22" width="70" height="22" rx="11" fill="#000"/>
-        <circle cx="160" cy="33" r="3" fill="#1a1a1a"/>
-        <!-- Status bar -->
-        <text x="32" y="38" font-family="DM Sans, sans-serif" font-size="11" font-weight="500" fill="#f5f5f0">9:41</text>
-        <g transform="translate(220,30)">
-          <rect x="0" y="2" width="3" height="6" rx="0.5" fill="#f5f5f0"/>
-          <rect x="5" y="0" width="3" height="8" rx="0.5" fill="#f5f5f0"/>
-          <rect x="10" y="-2" width="3" height="10" rx="0.5" fill="#f5f5f0" opacity="0.5"/>
-          <rect x="18" y="-1" width="20" height="9" rx="2.5" fill="none" stroke="#f5f5f0" stroke-width="0.8"/>
-          <rect x="20" y="1" width="14" height="5" fill="#f5f5f0"/>
-        </g>
-
-        <!-- Header: "Tribes" wordmark -->
-        <text x="140" y="78" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="900" font-size="22" fill="#f5f5f0">Tribes</text>
-        <line x1="20" y1="95" x2="260" y2="95" stroke="rgba(245,245,240,0.08)" stroke-width="1"/>
-
-        <!-- Feed item 1: Profile header -->
-        <circle cx="36" cy="125" r="14" fill="#2a2a2a"/>
-        <circle cx="36" cy="121" r="4" fill="#444"/>
-        <path d="M27 138 a9 9 0 0 1 18 0" fill="#444"/>
-        <text x="58" y="121" font-family="DM Sans, sans-serif" font-size="11" font-weight="500" fill="#f5f5f0">Maya Cole</text>
-        <text x="58" y="134" font-family="DM Mono, monospace" font-size="8" letter-spacing="1" fill="rgba(245,245,240,0.5)">PHOTOGRAPHER · NYC</text>
-
-        <!-- Feed image -->
-        <defs>
-          <linearGradient id="postGrad1" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stop-color="#7a4e2d"/>
-            <stop offset="100%" stop-color="#2a1810"/>
-          </linearGradient>
-          <linearGradient id="postGrad2" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stop-color="#3d2a4d"/>
-            <stop offset="100%" stop-color="#1a1020"/>
-          </linearGradient>
-        </defs>
-        <rect x="20" y="152" width="240" height="200" rx="6" fill="url(#postGrad1)"/>
-        <!-- Soft "subject" hint inside the image -->
-        <circle cx="140" cy="240" r="46" fill="rgba(0,0,0,0.3)"/>
-        <circle cx="140" cy="220" r="20" fill="rgba(245,245,240,0.08)"/>
-        <path d="M110 280 a30 35 0 0 1 60 0 z" fill="rgba(245,245,240,0.08)"/>
-        <!-- Image carousel dots -->
-        <circle cx="132" cy="338" r="2.5" fill="#f5f5f0"/>
-        <circle cx="140" cy="338" r="2" fill="rgba(245,245,240,0.4)"/>
-        <circle cx="148" cy="338" r="2" fill="rgba(245,245,240,0.4)"/>
-
-        <!-- Action row -->
-        <g transform="translate(20,372)">
-          <!-- Heart -->
-          <path d="M0 5 a4 4 0 0 1 7 -2 a4 4 0 0 1 7 2 c0 4 -7 9 -7 9 s-7 -5 -7 -9 z" fill="none" stroke="#f5f5f0" stroke-width="1.3"/>
-          <!-- Comment -->
-          <path d="M28 0 h14 a3 3 0 0 1 3 3 v6 a3 3 0 0 1 -3 3 h-9 l-5 4 v-4 a3 3 0 0 1 -3 -3 v-6 a3 3 0 0 1 3 -3 z" fill="none" stroke="#f5f5f0" stroke-width="1.3"/>
-          <!-- Collab icon (two arrows) -->
-          <g transform="translate(56,2)">
-            <path d="M0 5 l5 -4 v3 h5 v2 h-5 v3 z" fill="#f5f5f0"/>
-            <path d="M14 5 l-5 -4 v3 h-5 v2 h5 v3 z" fill="#c9a96e" transform="translate(2,4)"/>
-          </g>
-          <!-- Bookmark -->
-          <path d="M210 0 v14 l-5 -4 l-5 4 v-14 z" fill="none" stroke="#f5f5f0" stroke-width="1.3"/>
-        </g>
-
-        <text x="20" y="408" font-family="DM Sans, sans-serif" font-size="10" font-weight="500" fill="#f5f5f0">142 likes  ·  18 collabs</text>
-        <text x="20" y="424" font-family="DM Sans, sans-serif" font-size="10" fill="rgba(245,245,240,0.7)">Last shoot of the autumn series.</text>
-        <text x="20" y="438" font-family="DM Sans, sans-serif" font-size="10" fill="rgba(245,245,240,0.5)">styled with @julianreyes</text>
-
-        <!-- Second post preview -->
-        <line x1="20" y1="458" x2="260" y2="458" stroke="rgba(245,245,240,0.06)"/>
-        <circle cx="36" cy="478" r="11" fill="#2a2a2a"/>
-        <circle cx="36" cy="475" r="3.2" fill="#444"/>
-        <text x="56" y="476" font-family="DM Sans, sans-serif" font-size="10" font-weight="500" fill="#f5f5f0">Julian Reyes</text>
-        <text x="56" y="487" font-family="DM Mono, monospace" font-size="7" letter-spacing="1" fill="rgba(245,245,240,0.5)">STYLIST · LA</text>
-        <rect x="20" y="500" width="240" height="50" rx="4" fill="url(#postGrad2)"/>
-
-        <!-- Bottom tab bar -->
-        <line x1="0" y1="560" x2="280" y2="560" stroke="rgba(245,245,240,0.08)"/>
-        <!-- Just suggestive bottom safe area -->
-      </svg>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════ STATS ═══════════════════════════ -->
-  <section class="stats">
-    <div class="stat">
-      <div class="stat-num" data-target="2847">0</div>
-      <div class="stat-label">On the waitlist</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num" data-target="142">0</div>
-      <div class="stat-label">Cities represented</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num"><span data-target="60">0</span><span class="plus">+</span></div>
-      <div class="stat-label">Creative roles</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num"><em style="font-style: italic;">Q3</em></div>
-      <div class="stat-label">2026 launch</div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════ ROLES TICKER ═══════════════════════════ -->
-  <section class="roles">
-    <div class="roles-head">
-      <span class="section-label">Built for every kind of creative</span>
-      <h3>Find your collaborators.</h3>
-    </div>
-
-    <div class="ticker" id="ticker1"></div>
-    <div class="ticker reverse" id="ticker2"></div>
-    <div class="ticker slow" id="ticker3"></div>
-  </section>
-
-  <!-- ═══════════════════════════ FINAL CTA ═══════════════════════════ -->
-  <section class="final-cta" id="waitlist">
-    <div class="final-cta-inner">
-      <span class="section-label">Coming Q3 2026</span>
-      <h3>Be among the first.</h3>
-      <p>Early access to Tribes when we launch on the App Store. No spam, just one email when the doors open.</p>
-      <form class="waitlist" id="waitlistForm2" autocomplete="off">
-        <input type="email" id="waitlistEmail2" placeholder="your@email.com" required aria-label="Email address" />
-        <button type="submit">Reserve my spot</button>
-      </form>
-      <div class="waitlist-success-msg" id="waitlistMsg2"></div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
-  <footer>
-    <svg class="footer-icon" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-      <rect width="44" height="44" rx="10" fill="#111"/>
-      <line x1="22" y1="10" x2="13" y2="24" stroke="rgba(245,245,240,0.22)" stroke-width="0.8"/>
-      <line x1="22" y1="10" x2="31" y2="24" stroke="rgba(245,245,240,0.22)" stroke-width="0.8"/>
-      <line x1="13" y1="24" x2="31" y2="24" stroke="rgba(245,245,240,0.15)" stroke-width="0.8"/>
-      <circle cx="22" cy="10" r="2.2" fill="#f5f5f0"/>
-      <circle cx="13" cy="24" r="1.6" fill="rgba(245,245,240,0.6)"/>
-      <circle cx="31" cy="24" r="1.6" fill="rgba(245,245,240,0.6)"/>
-      <text x="22" y="36" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="900" font-size="9" fill="#f5f5f0">Tribes</text>
-    </svg>
-    <div class="footer-tagline"><em>For creatives who collaborate.</em></div>
-    <div class="footer-links">
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
-      <a href="/support">Support</a>
-      <a href="mailto:hello@tribes.network">Contact</a>
-    </div>
-    <p class="footer-copy">© 2026 Tribes. All rights reserved.</p>
-  </footer>
-
-  <script>
-  // ═══════════════════════════ CONSTELLATION CANVAS ═══════════════════════════
-  (function () {
-    const canvas = document.getElementById('constellation');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: -9999, y: -9999 };
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    function resize() {
-      const w = canvas.parentElement.offsetWidth;
-      const h = canvas.parentElement.offsetHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvas.style.width = w + 'px';
-      canvas.style.height = h + 'px';
-      ctx.scale(dpr, dpr);
-      initParticles(w, h);
-    }
-
-    function initParticles(w, h) {
-      particles = [];
-      const count = Math.min(90, Math.floor((w * h) / 14000));
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.22,
-          vy: (Math.random() - 0.5) * 0.22,
-          r: Math.random() * 1.4 + 0.4
-        });
-      }
-    }
-
-    function animate() {
-      const w = canvas.width / dpr;
-      const h = canvas.height / dpr;
-      ctx.clearRect(0, 0, w, h);
-
-      // Move and draw points
-      for (let p of particles) {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(245,245,240,0.55)';
-        ctx.fill();
-      }
-
-      // Connect close pairs
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < 14400) {
-            const a = (1 - Math.sqrt(d2) / 120) * 0.18;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = 'rgba(245,245,240,' + a + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-        // Mouse connections in gold
-        const mdx = particles[i].x - mouse.x;
-        const mdy = particles[i].y - mouse.y;
-        const md2 = mdx * mdx + mdy * mdy;
-        if (md2 < 32400) {
-          const a = (1 - Math.sqrt(md2) / 180) * 0.5;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = 'rgba(201,169,110,' + a + ')';
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-
-    resize();
-    animate();
-    window.addEventListener('resize', resize);
-    canvas.parentElement.addEventListener('mousemove', e => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    });
-    canvas.parentElement.addEventListener('mouseleave', () => {
-      mouse.x = -9999; mouse.y = -9999;
-    });
-  })();
-
-  // ═══════════════════════════ CUSTOM CURSOR ═══════════════════════════
-  (function () {
-    if (window.matchMedia('(pointer: coarse)').matches) return;
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-    });
-    function loop() {
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      requestAnimationFrame(loop);
-    }
-    loop();
-
-    document.querySelectorAll('a, button, input, .role-pill, .disc-card, .feature-card').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-    });
-  })();
-
-  // ═══════════════════════════ NAV SCROLL ═══════════════════════════
-  (function () {
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 30) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    });
-  })();
-
-  // ═══════════════════════════ DISCIPLINE MARQUEES ═══════════════════════════
-  (function () {
-    const disciplines1 = [
-      { name: 'Photography', cls: 'disc-photo',   num: '01', meta: 'STILL · MOVING · LIGHT' },
-      { name: 'Film',        cls: 'disc-film',    num: '02', meta: 'DIRECTORS · EDITORS · DOPS' },
-      { name: 'Fashion',     cls: 'disc-fashion', num: '03', meta: 'STYLISTS · MODELS · DESIGN' },
-      { name: 'Music',       cls: 'disc-music',   num: '04', meta: 'PRODUCERS · ARTISTS · MIX' },
-      { name: 'Design',      cls: 'disc-design',  num: '05', meta: 'GRAPHIC · 3D · MOTION' },
-      { name: 'Art',         cls: 'disc-art',     num: '06', meta: 'PAINTERS · MURALISTS' },
-      { name: 'Direction',   cls: 'disc-direct',  num: '07', meta: 'CREATIVE · ART · COPY' },
-      { name: 'Styling',     cls: 'disc-style',   num: '08', meta: 'HAIR · MAKEUP · WARDROBE' },
-    ];
-
-    function buildMarquee(el, items) {
-      // Duplicate so the loop is seamless
-      const set = items.concat(items);
-      el.innerHTML = set.map(it => `
-        <div class="disc-card ${it.cls}">
-          <div>
-            <div class="disc-meta">${it.meta}</div>
+          <!-- Feed -->
+          <div class="app on" data-screen="feed">
+            <div class="aprow">
+              <div class="av ring"></div>
+              <div>
+                <div class="aname">Maya Cole
+                  <svg class="seal" viewBox="0 0 24 24" fill="#fff"><path d="M12 1l2.4 2.1 3.1-.6 1 3 3 1-.6 3.1L23 12l-2.1 2.4.6 3.1-3 1-1 3-3.1-.6L12 23l-2.4-2.1-3.1.6-1-3-3-1 .6-3.1L1 12l2.1-2.4L2.5 6.5l3-1 1-3 3.1.6z"/><path d="M9.5 12.2l1.8 1.8 3.6-3.8" stroke="#000" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="arole">Photographer · NYC</div>
+              </div>
+              <span class="open-pill" style="margin-left:auto">Open</span>
+            </div>
+            <div class="acard" style="padding:0;overflow:hidden">
+              <div class="aimg" style="margin:0;border-radius:0;height:210px"></div>
+              <div style="padding:12px 14px">
+                <div class="atext">Last shoot of the autumn series — styled with Julian.</div>
+                <div class="ameta" style="margin-top:8px">142 likes · 18 comments</div>
+              </div>
+            </div>
+            <div class="aprow">
+              <div class="av"></div>
+              <div>
+                <div class="aname">Julian Reyes</div>
+                <div class="arole">Stylist · LA</div>
+              </div>
+              <span class="open-pill" style="margin-left:auto">Open</span>
+            </div>
+            <div class="acard" style="padding:0;overflow:hidden">
+              <div class="aimg b" style="margin:0;border-radius:0;height:120px"></div>
+            </div>
           </div>
-          <div class="disc-name">${it.name}</div>
-          <div class="disc-num">${it.num}</div>
+
+          <!-- Collab -->
+          <div class="app" data-screen="collab">
+            <div style="text-align:center;font-size:13px;font-weight:700">Collab Request</div>
+            <div class="acard">
+              <div class="aprow">
+                <div class="av lg"></div>
+                <div>
+                  <div class="aname">To: Maya Cole</div>
+                  <div class="arole">📷 Photographer</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="alabel">Your message</div>
+              <div class="afield">Tell Maya about your idea…</div>
+              <div class="ameta" style="text-align:right;margin-top:6px;font-size:10px">0/500</div>
+            </div>
+            <div>
+              <div class="alabel">Attach a project</div>
+              <div class="acard" style="display:flex;align-items:center;gap:10px;padding:12px 14px">
+                <div style="width:34px;height:34px;border-radius:10px;background:var(--card2);border:1px solid var(--hair)"></div>
+                <div>
+                  <div style="font-size:12px;font-weight:600">Autumn Editorial</div>
+                  <div class="ameta" style="font-size:10px">3 collaborators</div>
+                </div>
+              </div>
+            </div>
+            <div class="abtn">✦&nbsp; Send Collab Request</div>
+          </div>
+
+          <!-- Profile -->
+          <div class="app" data-screen="profile">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:4px">
+              <div class="av lg ring" style="width:64px;height:64px"></div>
+              <div class="aname" style="font-size:16px">Maya Cole
+                <svg class="seal" viewBox="0 0 24 24" fill="#fff"><path d="M12 1l2.4 2.1 3.1-.6 1 3 3 1-.6 3.1L23 12l-2.1 2.4.6 3.1-3 1-1 3-3.1-.6L12 23l-2.4-2.1-3.1.6-1-3-3-1 .6-3.1L1 12l2.1-2.4L2.5 6.5l3-1 1-3 3.1.6z"/><path d="M9.5 12.2l1.8 1.8 3.6-3.8" stroke="#000" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="arole">Photographer · New York</div>
+            </div>
+            <div class="astat-row">
+              <div class="astat"><b>1.2k</b><span>Connections</span></div>
+              <div class="astat"><b>48</b><span>Collabs</span></div>
+              <div class="astat"><b>12</b><span>Projects</span></div>
+            </div>
+            <div class="acard">
+              <div class="alabel">Profile viewers · Pro</div>
+              <div class="aviewer"><div class="av"></div><span>Julian Reyes</span><em>2h ago</em></div>
+              <div class="aviewer"><div class="av"></div><span>Ana Duarte</span><em>5h ago</em></div>
+              <div class="aviewer"><div class="av"></div><span>Theo Marchetti</span><em>1d ago</em></div>
+            </div>
+            <div class="abtn ghost">Message</div>
+            <div class="abtn" style="margin-top:0">✦&nbsp; Request Collab</div>
+          </div>
+
         </div>
-      `).join('');
-    }
-    buildMarquee(document.getElementById('marquee1'), disciplines1);
-    // Reverse row uses the same items in reversed order for variety
-    buildMarquee(document.getElementById('marquee2'), [...disciplines1].reverse());
-  })();
+      </div>
+      <div class="phone-tabs" role="tablist" aria-label="App screens">
+        <button class="on" data-tab="feed" role="tab" aria-selected="true">Feed</button>
+        <button data-tab="collab" role="tab" aria-selected="false">Collab</button>
+        <button data-tab="profile" role="tab" aria-selected="false">Profile</button>
+      </div>
+    </div>
+  </div>
+</header>
 
-  // ═══════════════════════════ ROLES TICKER ═══════════════════════════
-  (function () {
-    const rolesA = ['Photographer', 'Videographer', 'Film Director', 'Film Editor', 'Cinematographer', 'Art Director', 'Creative Director'];
-    const rolesB = ['Stylist', 'Makeup Artist', 'Hair Stylist', 'Fashion Designer', 'Model', 'Casting Director', 'Set Designer'];
-    const rolesC = ['Graphic Designer', 'Illustrator', 'Musician', 'Music Producer', 'Dancer', 'Actor', 'Content Creator', 'Copywriter', 'Muralist', 'Producer'];
+<section id="features" class="wrap">
+  <div class="sec-head reveal">
+    <span class="eyebrow">What's inside</span>
+    <h2>Built for the people behind the lens, the brush, and the beat.</h2>
+    <p>Every feature was designed for working creatives — not influencers, not brands, not noise.</p>
+  </div>
+  <div class="grid">
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="1.6"/><path d="M21 15l-5-5-9 9"/></svg></div><h3>Community feed</h3><p>Share photos, video and audio with the community. Multi-image galleries, reactions beyond a like.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/></svg></div><h3>Voice messages</h3><p>When typing isn't enough — record and send voice notes in any conversation, solo or group.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2 4.3 4.7.6-3.4 3.2.9 4.6L12 13.6 7.8 15.7l.9-4.6L5.3 7.9 10 7.3z"/></svg></div><h3>Collab requests</h3><p>Send collaboration invites with a personal note and an attached project. Free members get 5 a month.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg></div><h3>Direct messages</h3><p>Private conversations with your network — one to one, or with your whole inner circle at once.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.2-3.4 3.8-5 7-5s5.8 1.6 7 5"/><circle cx="4.5" cy="10" r="2"/><circle cx="19.5" cy="10" r="2"/></svg></div><h3>Inner circle</h3><p>Curate your closest collaborators. Group chats, shared moodboards, your most trusted people in one place.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="12" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></div><h3>Projects &amp; moodboards</h3><p>Plan shoots and releases, invite collaborators, and build moodboards that align everyone on one aesthetic.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg></div><h3>Discover</h3><p>Find creatives by role, location and availability — photographers, stylists, directors, and a hundred more.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10 21a2.2 2.2 0 0 0 4 0"/></svg></div><h3>Smart notifications</h3><p>Granular controls — choose exactly what reaches you: connections, collabs, messages, reactions.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1l2.2 2 2.9-.6 1 2.9 2.8 1-.6 2.9 2 2.2-2 2.2.6 2.9-2.8 1-1 2.9-2.9-.6-2.2 2-2.2-2-2.9.6-1-2.9-2.8-1 .6-2.9-2-2.2 2-2.2-.6-2.9 2.8-1 1-2.9 2.9.6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Profile viewers <span class="pro-tag">Pro</span></h3><p>See who's been checking out your work — with analytics on views, connections, and growth.</p></div>
+  </div>
+</section>
 
-    function build(el, items, goldEvery) {
-      const set = items.concat(items);
-      el.innerHTML = set.map((r, i) => {
-        const gold = goldEvery && i % goldEvery === 0 ? ' gold' : '';
-        return `<span class="role-pill${gold}">${r}</span>`;
-      }).join('');
-    }
-    build(document.getElementById('ticker1'), rolesA, 3);
-    build(document.getElementById('ticker2'), rolesB, 4);
-    build(document.getElementById('ticker3'), rolesC, 5);
-  })();
+<div class="roles" aria-hidden="true">
+  <div class="marquee" id="marquee"></div>
+</div>
 
-  // ═══════════════════════════ SCROLL REVEAL — FEATURES + STATS ═══════════════════════════
-  (function () {
-    const cards = document.querySelectorAll('.feature-card');
-    const featureObs = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 70);
-          featureObs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    cards.forEach(c => featureObs.observe(c));
+<section id="pro" class="wrap">
+  <div class="pro-band">
+    <div class="reveal">
+      <span class="eyebrow">Tribes Pro</span>
+      <h2>Free to join.<br>Pro when you're working.</h2>
+      <p style="font-size:15px;line-height:1.6;color:var(--sub);margin-top:14px">Everything essential is free — the feed, messaging, calls, discovery. Pro removes the limits and opens the tools working professionals reach for.</p>
+    </div>
+    <div class="pro-list reveal">
+      <div class="pro-item"><b>Unlimited collabs</b><span>Send as many collaboration requests as the work demands.</span></div>
+      <div class="pro-item"><b>Unlimited projects</b><span>No caps on projects, moodboards, or inner-circle members.</span></div>
+      <div class="pro-item"><b>Profile viewers</b><span>See exactly who viewed your profile in the last 30 days.</span></div>
+      <div class="pro-item"><b>Analytics</b><span>Views, connection growth, and how your work is landing.</span></div>
+      <div class="pro-item"><b>Verified badge</b><span>A mark on your profile that tells people you're serious.</span></div>
+    </div>
+  </div>
+</section>
 
-    const stats = document.querySelectorAll('.stat');
-    const statObs = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-            const numEl = entry.target.querySelector('[data-target]');
-            if (numEl) animateCount(numEl);
-          }, i * 120);
-          statObs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    stats.forEach(s => statObs.observe(s));
-  })();
+<section class="final wrap" id="join">
+  <span class="eyebrow reveal">Launching 2026</span>
+  <h2 class="reveal">Be there when the doors open.</h2>
+  <p class="reveal" style="font-size:15px;color:var(--sub);margin-top:14px">One email when Tribes lands on the App Store. Nothing else.</p>
+  <form class="waitlist reveal" data-form>
+    <input type="email" placeholder="your@email.com" required aria-label="Email address">
+    <button type="submit">Get notified</button>
+  </form>
+  <div class="form-msg" data-msg></div>
+</section>
 
-  function animateCount(el) {
-    const target = parseInt(el.dataset.target, 10);
-    const duration = 1800;
-    const startTime = performance.now();
-    function frame(now) {
-      const t = Math.min((now - startTime) / duration, 1);
-      // ease-out cubic
-      const eased = 1 - Math.pow(1 - t, 3);
-      const val = Math.round(target * eased);
-      el.textContent = val.toLocaleString();
-      if (t < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
+<footer>
+  <div class="wrap foot">
+    <span class="wordmark" style="font-size:16px">Tribes</span>
+    <div class="foot-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="support.html">Support</a>
+      <a href="mailto:support@tribes.network">Contact</a>
+    </div>
+    <span class="copy">© 2026 Tribes. All rights reserved.</span>
+  </div>
+</footer>
 
-  // ═══════════════════════════ WAITLIST FORM ═══════════════════════════
-  (function () {
-    const LS_KEY = 'tribes_waitlist_email';
-    const COUNT_KEY = 'tribes_waitlist_count_base';
+<script>
+(function(){
+  // ── Waitlist ──────────────────────────────────────────────
+  // To collect signups automatically: create a free form at formspree.io,
+  // then replace the empty string below with your endpoint, e.g.
+  //   var FORM_ENDPOINT = "https://formspree.io/f/abcdwxyz";
+  // Until then, submissions open a pre-filled email to support@tribes.network.
+  var FORM_ENDPOINT = "";
 
-    // If already signed up, restore success state
-    const saved = localStorage.getItem(LS_KEY);
-
-    function handleForm(formId, msgId) {
-      const form = document.getElementById(formId);
-      if (!form) return;
-      const input = form.querySelector('input');
-      const msg = document.getElementById(msgId);
-
-      if (saved) {
-        input.value = saved;
-        form.classList.add('success');
-        msg.textContent = '✓  You\'re on the list';
-        msg.classList.add('show');
+  document.querySelectorAll("[data-form]").forEach(function(form){
+    var msg = form.parentElement.querySelector("[data-msg]") || form.nextElementSibling;
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var email = form.querySelector("input").value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        msg.textContent = "Please enter a valid email address.";
+        msg.classList.remove("ok");
+        return;
       }
+      if(FORM_ENDPOINT){
+        fetch(FORM_ENDPOINT, {
+          method:"POST",
+          headers:{ "Accept":"application/json", "Content-Type":"application/json" },
+          body: JSON.stringify({ email: email })
+        }).then(function(r){
+          if(r.ok){ msg.textContent = "You're on the list — we'll email you at launch."; msg.classList.add("ok"); form.reset(); }
+          else { throw 0; }
+        }).catch(function(){
+          msg.textContent = "Something went wrong — email support@tribes.network and we'll add you.";
+          msg.classList.remove("ok");
+        });
+      } else {
+        window.location.href = "mailto:support@tribes.network?subject=" +
+          encodeURIComponent("Tribes launch list") + "&body=" +
+          encodeURIComponent("Add me to the launch list: " + email);
+        msg.textContent = "Opening your email app — hit send and you're on the list.";
+        msg.classList.add("ok");
+      }
+    });
+  });
 
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const email = input.value.trim();
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          msg.textContent = 'Please enter a valid email';
-          msg.classList.add('show');
-          return;
-        }
-        localStorage.setItem(LS_KEY, email);
-        form.classList.add('success');
-        msg.textContent = '✓  You\'re on the list. We\'ll be in touch.';
-        msg.classList.add('show');
-        // Bump the visible count
-        const countEl = document.getElementById('waitlistCount');
-        if (countEl && !localStorage.getItem(COUNT_KEY)) {
-          localStorage.setItem(COUNT_KEY, '1');
-          countEl.textContent = (parseInt(countEl.textContent.replace(/,/g, ''), 10) + 1).toLocaleString();
-        }
+  // ── Phone tabs ────────────────────────────────────────────
+  var tabs = document.querySelectorAll(".phone-tabs button");
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){
+      tabs.forEach(function(x){ x.classList.remove("on"); x.setAttribute("aria-selected","false"); });
+      t.classList.add("on"); t.setAttribute("aria-selected","true");
+      document.querySelectorAll(".app").forEach(function(s){
+        s.classList.toggle("on", s.dataset.screen === t.dataset.tab);
       });
-    }
+    });
+  });
 
-    handleForm('waitlistForm', 'waitlistMsg');
-    handleForm('waitlistForm2', 'waitlistMsg2');
-  })();
-  </script>
+  // ── Roles marquee (duplicated for seamless loop) ─────────
+  var roles = ["Photographer","Director","Stylist","Musician","Makeup Artist","Designer","Videographer","Art Director","Model","Producer","Illustrator","Editor","Set Designer","Colorist","Choreographer","Creative Director"];
+  var strip = roles.concat(roles).map(function(r){ return '<span class="role">'+r+'</span>'; }).join("");
+  document.getElementById("marquee").innerHTML = strip;
+
+  // ── Scroll reveals ────────────────────────────────────────
+  if("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold:.12 });
+    document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); });
+  }
+})();
+</script>
 
 </body>
 </html>
