@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tribes — For Creatives Who Collaborate</title>
+<meta name="apple-itunes-app" content="app-id=6762027423">
 <meta name="description" content="Tribes is a private community app for the creative industry. Discover collaborators, share your work, and build your inner circle. Coming to the App Store.">
 <style>
   :root{
@@ -369,12 +370,13 @@
 
 <script>
 (function(){
-  // ── Waitlist ──────────────────────────────────────────────
-  // To collect signups automatically: create a free form at formspree.io,
-  // then replace the empty string below with your endpoint, e.g.
-  //   var FORM_ENDPOINT = "https://formspree.io/f/abcdwxyz";
-  // Until then, submissions open a pre-filled email to support@tribes.network.
-  var FORM_ENDPOINT = "";
+  // ── Config ────────────────────────────────────────────────
+  // WAITLIST_URL: the joinWaitlist Cloud Function. Verify the URL against the
+  // `firebase deploy --only functions` output and correct it here if it differs.
+  var WAITLIST_URL = "https://joinwaitlist-afwmkagbma-uc.a.run.app";
+  // APP_STORE_URL: leave empty until launch. On launch day, paste the App Store
+  // link here and every CTA on the page becomes "Download on the App Store".
+  var APP_STORE_URL = "";
 
   document.querySelectorAll("[data-form]").forEach(function(form){
     var msg = form.parentElement.querySelector("[data-msg]") || form.nextElementSibling;
@@ -386,27 +388,40 @@
         msg.classList.remove("ok");
         return;
       }
-      if(FORM_ENDPOINT){
-        fetch(FORM_ENDPOINT, {
-          method:"POST",
-          headers:{ "Accept":"application/json", "Content-Type":"application/json" },
-          body: JSON.stringify({ email: email })
-        }).then(function(r){
-          if(r.ok){ msg.textContent = "You're on the list — we'll email you at launch."; msg.classList.add("ok"); form.reset(); }
-          else { throw 0; }
-        }).catch(function(){
-          msg.textContent = "Something went wrong — email support@tribes.network and we'll add you.";
-          msg.classList.remove("ok");
-        });
-      } else {
+      msg.textContent = "Adding you…"; msg.classList.remove("ok");
+      fetch(WAITLIST_URL, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ email: email })
+      }).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return {ok:r.ok, d:d}; }); })
+      .then(function(res){
+        if(res.ok){
+          msg.textContent = res.d.already ? "You're already on the list." : "You're on the list — we'll email you at launch.";
+          msg.classList.add("ok"); form.reset();
+        } else { throw 0; }
+      }).catch(function(){
         window.location.href = "mailto:support@tribes.network?subject=" +
           encodeURIComponent("Tribes launch list") + "&body=" +
           encodeURIComponent("Add me to the launch list: " + email);
-        msg.textContent = "Opening your email app — hit send and you're on the list.";
+        msg.textContent = "Opening your email app instead — hit send and you're on the list.";
         msg.classList.add("ok");
-      }
+      });
     });
   });
+
+  // ── Launch mode ───────────────────────────────────────────
+  if(APP_STORE_URL){
+    var navCta = document.querySelector(".nav-cta");
+    if(navCta){ navCta.textContent = "Download"; navCta.href = APP_STORE_URL; }
+    document.querySelectorAll("[data-form]").forEach(function(form){
+      var a = document.createElement("a");
+      a.className = "nav-cta"; a.style.cssText = "display:inline-block;padding:15px 26px;font-size:15px;border-radius:16px";
+      a.textContent = "Download on the App Store"; a.href = APP_STORE_URL;
+      form.replaceWith(a);
+    });
+    var note = document.querySelector(".hero-note span:last-child");
+    if(note){ note.textContent = "Now on the App Store"; }
+  }
 
   // ── Phone tabs ────────────────────────────────────────────
   var tabs = document.querySelectorAll(".phone-tabs button");
