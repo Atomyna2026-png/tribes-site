@@ -1,456 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tribes — For Creatives Who Collaborate</title>
-<meta name="apple-itunes-app" content="app-id=6762027423">
-<meta name="description" content="Tribes is a private community app for the creative industry. Discover collaborators, share your work, and build your inner circle. Coming to the App Store.">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tribes — For creatives who collaborate</title>
+<meta name="description" content="Tribes — private circles for creatives who collaborate." />
+<link rel="icon" type="image/png" href="icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-  :root{
-    --bg:#000;
-    --text:#fff;
-    --sub:rgba(255,255,255,.5);
-    --faint:rgba(255,255,255,.3);
-    --ghost:rgba(255,255,255,.25);
-    --card:#141414;          /* Color(white: 0.08) */
-    --card2:#1a1a1a;         /* Color(white: 0.10) */
-    --hair:rgba(255,255,255,.07);
-    --hair2:rgba(255,255,255,.12);
-    --green:#30d158;
-    --r-lg:16px; --r-md:14px; --r-sm:12px;
-    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #000000;
+    --near:    #0a0a0b;
+    --white:   #f4f2ee;
+    --ash:     #b7b4ad;
+    --dim:     #6d6a64;
+    --line:    rgba(244,242,238,0.16);
+    --serif:   'Fraunces', Georgia, serif;
+    --sans:    'Inter', -apple-system, system-ui, sans-serif;
   }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:#fff;color:#000}
-  :focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
 
-  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  html { -webkit-text-size-adjust: 100%; }
 
-  /* ── Nav ─────────────────────────────────────────── */
-  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(0,0,0,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--hair)}
-  .nav-in{max-width:1120px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
-  .wordmark{font-size:19px;font-weight:800;letter-spacing:-.02em}
-  .nav-links{display:flex;gap:28px;align-items:center}
-  .nav-links a{font-size:14px;font-weight:500;color:var(--sub);transition:color .2s}
-  .nav-links a:hover{color:#fff}
-  .nav-cta{background:#fff;color:#000 !important;font-size:14px;font-weight:700;padding:9px 18px;border-radius:12px;transition:opacity .2s}
-  .nav-cta:hover{opacity:.85}
-
-  /* ── Hero ────────────────────────────────────────── */
-  header.hero{padding:150px 24px 90px;position:relative}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
-  h1{font-size:clamp(40px,5.6vw,68px);font-weight:800;letter-spacing:-.035em;line-height:1.03;margin:18px 0 20px}
-  h1 .dim{color:var(--faint)}
-  .hero p.lead{font-size:17px;line-height:1.6;color:var(--sub);max-width:46ch;margin-bottom:32px}
-
-  .waitlist{display:flex;gap:10px;max-width:440px}
-  .waitlist input{flex:1;background:var(--card2);border:1px solid var(--hair);border-radius:var(--r-md);color:#fff;font-family:var(--sans);font-size:15px;padding:15px 16px;transition:border-color .2s;min-width:0}
-  .waitlist input::placeholder{color:rgba(255,255,255,.25)}
-  .waitlist input:focus{outline:none;border-color:var(--ghost)}
-  .waitlist button{background:#fff;color:#000;border:0;border-radius:var(--r-lg);font-family:var(--sans);font-size:15px;font-weight:700;padding:15px 22px;cursor:pointer;white-space:nowrap;transition:opacity .2s}
-  .waitlist button:hover{opacity:.85}
-  .form-msg{font-size:13px;color:var(--sub);margin-top:12px;min-height:18px}
-  .form-msg.ok{color:var(--green)}
-  .hero-note{display:flex;gap:8px;align-items:center;margin-top:22px}
-  .hero-note .pill{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--green);background:rgba(48,209,88,.12);padding:3px 8px;border-radius:99px}
-  .hero-note span:last-child{font-size:13px;color:var(--faint)}
-
-  /* ── Phone ───────────────────────────────────────── */
-  .phone-col{display:flex;flex-direction:column;align-items:center;gap:18px}
-  .phone{width:300px;background:#050505;border:1px solid var(--hair2);border-radius:44px;padding:10px;box-shadow:0 40px 120px rgba(0,0,0,.9)}
-  .screen{background:#000;border-radius:36px;overflow:hidden;height:600px;position:relative}
-  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:26px;background:#0a0a0a;border-radius:99px;z-index:5}
-  .app{position:absolute;inset:0;padding:52px 16px 16px;display:none;flex-direction:column;gap:12px;overflow:hidden}
-  .app.on{display:flex;animation:fadeUp .35s ease}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-  .aprow{display:flex;align-items:center;gap:10px}
-  .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#2a2a2a,#4a4a4a);flex:none;position:relative}
-  .av.ring::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:1.5px solid #fff}
-  .av.lg{width:52px;height:52px}
-  .aname{font-size:14px;font-weight:600;display:flex;align-items:center;gap:5px}
-  .seal{width:12px;height:12px;flex:none}
-  .arole{font-size:11px;color:var(--sub)}
-  .open-pill{font-size:8px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--green);background:rgba(48,209,88,.12);padding:2px 6px;border-radius:99px}
-  .acard{background:var(--card);border-radius:var(--r-lg);padding:14px}
-  .alabel{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
-  .aimg{border-radius:var(--r-sm);height:150px;background:linear-gradient(160deg,#1c1c1c 0%,#333 55%,#181818 100%);margin:10px 0}
-  .aimg.b{background:linear-gradient(200deg,#252525,#3d3d3d 60%,#151515)}
-  .ameta{font-size:11px;color:var(--sub)}
-  .atext{font-size:12px;line-height:1.5;color:rgba(255,255,255,.85)}
-  .abtn{background:#fff;color:#000;border-radius:var(--r-lg);font-size:13px;font-weight:700;text-align:center;padding:13px;margin-top:auto}
-  .abtn.ghost{background:transparent;color:#fff;border:1px solid var(--ghost)}
-  .afield{background:var(--card2);border:1px solid var(--hair);border-radius:var(--r-md);padding:12px;font-size:12px;color:rgba(255,255,255,.25);min-height:88px}
-  .astat-row{display:flex;gap:8px}
-  .astat{flex:1;background:var(--card);border-radius:var(--r-md);padding:10px;text-align:center}
-  .astat b{display:block;font-size:16px;font-weight:800}
-  .astat span{font-size:9px;color:var(--sub);letter-spacing:.05em;text-transform:uppercase}
-  .aviewer{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--hair)}
-  .aviewer:last-child{border:0}
-  .aviewer .av{width:28px;height:28px}
-  .aviewer span{font-size:12px;font-weight:500}
-  .aviewer em{font-size:10px;font-style:normal;color:var(--faint);margin-left:auto}
-
-  .phone-tabs{display:flex;gap:8px}
-  .phone-tabs button{background:var(--card);border:1px solid var(--hair);border-radius:99px;color:var(--sub);font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 16px;cursor:pointer;transition:all .2s}
-  .phone-tabs button.on{background:#fff;color:#000;border-color:#fff}
-
-  /* ── Sections ────────────────────────────────────── */
-  section{border-top:1px solid var(--hair)}
-  section.wrap{padding:90px 24px}
-  .sec-head{max-width:560px;margin-bottom:52px}
-  h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-.025em;line-height:1.12;margin-top:14px}
-  .sec-head p{font-size:15px;line-height:1.6;color:var(--sub);margin-top:14px}
-
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .fcard{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);padding:22px;transition:background .25s,transform .25s}
-  .fcard:hover{background:var(--card2);transform:translateY(-2px)}
-  .fcard .ic{width:38px;height:38px;border-radius:var(--r-sm);background:var(--card2);border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-  .fcard .ic svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .fcard h3{font-size:15px;font-weight:700;margin-bottom:7px}
-  .fcard p{font-size:13px;line-height:1.55;color:var(--sub)}
-  .fcard .pro-tag{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#000;background:#fff;padding:2px 6px;border-radius:99px;margin-left:6px;vertical-align:2px}
-
-  /* roles strip */
-  .roles{overflow:hidden;padding:56px 0}
-  .marquee{display:flex;gap:10px;width:max-content;animation:slide 36s linear infinite}
-  .roles:hover .marquee{animation-play-state:paused}
-  @keyframes slide{to{transform:translateX(-50%)}}
-  .role{font-size:12px;font-weight:600;color:var(--sub);background:var(--card);border:1px solid var(--hair);border-radius:99px;padding:9px 16px;white-space:nowrap}
-
-  /* pro */
-  .pro-band{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-  .pro-list{display:flex;flex-direction:column;gap:0}
-  .pro-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--hair);align-items:baseline}
-  .pro-item:last-child{border:0}
-  .pro-item b{font-size:14px;font-weight:700;flex:none;width:170px}
-  .pro-item span{font-size:13px;color:var(--sub);line-height:1.5}
-
-  /* final cta */
-  section.final{text-align:center;padding:110px 24px}
-  .final .waitlist{margin:32px auto 0}
-  .final .form-msg{text-align:center}
-
-  footer{border-top:1px solid var(--hair);padding:40px 0}
-  .foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .foot-links{display:flex;gap:22px}
-  .foot-links a{font-size:13px;color:var(--sub);transition:color .2s}
-  .foot-links a:hover{color:#fff}
-  .copy{font-size:12px;color:var(--faint)}
-
-  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
-  .reveal.in{opacity:1;transform:none}
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important;transition:none !important}
-    .reveal{opacity:1;transform:none}
-    html{scroll-behavior:auto}
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 7vh 24px 5vh;
+    gap: clamp(34px, 6vh, 60px);
+    position: relative;
+    overflow-x: hidden;
   }
-  @media (max-width: 900px){
-    header.hero{padding:130px 24px 64px}
-    .hero-grid{grid-template-columns:1fr;gap:52px}
-    .phone-col{order:2}
-    .grid{grid-template-columns:1fr 1fr}
-    .pro-band{grid-template-columns:1fr}
+
+  /* Ambient glow behind the masthead */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 18%;
+    left: 50%;
+    width: min(760px, 92vw);
+    height: min(760px, 92vw);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(244,242,238,0.10) 0%, rgba(244,242,238,0.03) 32%, transparent 62%);
+    pointer-events: none;
+    z-index: 0;
   }
-  @media (max-width: 560px){
-    .nav-links a:not(.nav-cta){display:none}
-    .grid{grid-template-columns:1fr}
-    .waitlist{flex-direction:column}
-    .phone{width:280px}
-    .screen{height:560px}
-    .pro-item b{width:auto}
-    .pro-item{flex-direction:column;gap:4px}
+
+  /* Fine film grain for editorial texture */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .masthead, .divider-wrap, .icon, .stage { position: relative; z-index: 1; }
+
+  /* ── Masthead ── */
+  .masthead { text-align: center; }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 600;
+    font-optical-sizing: auto;
+    font-size: clamp(4rem, 15vw, 9.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    background: linear-gradient(100deg, #7c7a75 0%, #ffffff 32%, #f2f0ec 50%, #ffffff 68%, #7c7a75 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: sheen 7s ease-in-out infinite;
+    filter: drop-shadow(0 0 26px rgba(244,242,238,0.18));
+  }
+
+  @keyframes sheen {
+    0%   { background-position: 130% 0; }
+    50%  { background-position: -30% 0; }
+    100% { background-position: 130% 0; }
+  }
+
+  .divider-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .rule {
+    width: 52px;
+    height: 1px;
+    background: var(--white);
+    opacity: 0.28;
+  }
+
+  .tagline {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(0.62rem, 1.6vw, 0.78rem);
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    color: var(--ash);
+    text-transform: uppercase;
+  }
+
+  /* ── App icon ── */
+  .icon {
+    width: clamp(74px, 12vw, 104px);
+    aspect-ratio: 1;
+    border-radius: 23%;
+    object-fit: cover;
+    border: 1px solid rgba(244,242,238,0.14);
+    box-shadow:
+      0 18px 48px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(0,0,0,0.4),
+      0 0 40px rgba(244,242,238,0.06);
+    display: block;
+  }
+
+  /* ── Framed video player ── */
+  .stage {
+    width: 100%;
+    max-width: 860px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #050505;
+    box-shadow:
+      0 40px 90px rgba(0,0,0,0.65),
+      inset 0 1px 0 rgba(244,242,238,0.06);
+  }
+
+  .stage video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+  }
+
+  .colophon {
+    position: relative;
+    z-index: 1;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 6px;
+  }
+
+  /* ── Orchestrated entrance ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .masthead, .divider-wrap, .icon, .stage, .colophon {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(6px);
+      animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .masthead     { animation-delay: 0.10s; }
+    .divider-wrap { animation-delay: 0.55s; }
+    .icon         { animation-delay: 0.95s; }
+    .stage        { animation-delay: 1.30s; }
+    .colophon     { animation-delay: 1.70s; }
+
+    /* keep the wordmark's own sheen/glow running after it settles */
+    .wordmark { animation: sheen 7s ease-in-out infinite; }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+  }
+
+  @media (max-width: 560px) {
+    body { gap: clamp(28px, 5vh, 44px); padding-top: 9vh; }
+    .stage { border-radius: 12px; }
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-in">
-    <a class="wordmark" href="#top">Tribes</a>
-    <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#pro">Pro</a>
-      <a href="support.html">Support</a>
-      <a class="nav-cta" href="#join">Get notified</a>
-    </div>
+  <header class="masthead">
+    <h1 class="wordmark">Tribes</h1>
+  </header>
+
+  <div class="divider-wrap">
+    <span class="rule" aria-hidden="true"></span>
+    <p class="tagline">For creatives who collaborate</p>
   </div>
-</nav>
 
-<header class="hero wrap" id="top">
-  <div class="hero-grid">
-    <div>
-      <span class="eyebrow">A private community for creatives</span>
-      <h1>Find the people<br>who make the work<span class="dim">.</span></h1>
-      <p class="lead">Tribes is where photographers, directors, stylists, musicians and designers discover collaborators, share their work, and build an inner circle — without the noise.</p>
+  <img class="icon" src="icon.png" alt="Tribes app icon" width="104" height="104" />
 
-      <form class="waitlist" data-form>
-        <input type="email" placeholder="your@email.com" required aria-label="Email address">
-        <button type="submit">Get notified</button>
-      </form>
-      <div class="form-msg" data-msg></div>
-
-      <div class="hero-note">
-        <span class="pill">iOS</span>
-        <span>Launching on the App Store · 2026</span>
-      </div>
-    </div>
-
-    <div class="phone-col">
-      <div class="phone" aria-label="Preview of the Tribes app">
-        <div class="screen">
-          <div class="notch"></div>
-
-          <!-- Feed -->
-          <div class="app on" data-screen="feed">
-            <div class="aprow">
-              <div class="av ring"></div>
-              <div>
-                <div class="aname">Maya Cole
-                  <svg class="seal" viewBox="0 0 24 24" fill="#fff"><path d="M12 1l2.4 2.1 3.1-.6 1 3 3 1-.6 3.1L23 12l-2.1 2.4.6 3.1-3 1-1 3-3.1-.6L12 23l-2.4-2.1-3.1.6-1-3-3-1 .6-3.1L1 12l2.1-2.4L2.5 6.5l3-1 1-3 3.1.6z"/><path d="M9.5 12.2l1.8 1.8 3.6-3.8" stroke="#000" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="arole">Photographer · NYC</div>
-              </div>
-              <span class="open-pill" style="margin-left:auto">Open</span>
-            </div>
-            <div class="acard" style="padding:0;overflow:hidden">
-              <div class="aimg" style="margin:0;border-radius:0;height:210px"></div>
-              <div style="padding:12px 14px">
-                <div class="atext">Last shoot of the autumn series — styled with Julian.</div>
-                <div class="ameta" style="margin-top:8px">142 likes · 18 comments</div>
-              </div>
-            </div>
-            <div class="aprow">
-              <div class="av"></div>
-              <div>
-                <div class="aname">Julian Reyes</div>
-                <div class="arole">Stylist · LA</div>
-              </div>
-              <span class="open-pill" style="margin-left:auto">Open</span>
-            </div>
-            <div class="acard" style="padding:0;overflow:hidden">
-              <div class="aimg b" style="margin:0;border-radius:0;height:120px"></div>
-            </div>
-          </div>
-
-          <!-- Collab -->
-          <div class="app" data-screen="collab">
-            <div style="text-align:center;font-size:13px;font-weight:700">Collab Request</div>
-            <div class="acard">
-              <div class="aprow">
-                <div class="av lg"></div>
-                <div>
-                  <div class="aname">To: Maya Cole</div>
-                  <div class="arole">📷 Photographer</div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="alabel">Your message</div>
-              <div class="afield">Tell Maya about your idea…</div>
-              <div class="ameta" style="text-align:right;margin-top:6px;font-size:10px">0/500</div>
-            </div>
-            <div>
-              <div class="alabel">Attach a project</div>
-              <div class="acard" style="display:flex;align-items:center;gap:10px;padding:12px 14px">
-                <div style="width:34px;height:34px;border-radius:10px;background:var(--card2);border:1px solid var(--hair)"></div>
-                <div>
-                  <div style="font-size:12px;font-weight:600">Autumn Editorial</div>
-                  <div class="ameta" style="font-size:10px">3 collaborators</div>
-                </div>
-              </div>
-            </div>
-            <div class="abtn">✦&nbsp; Send Collab Request</div>
-          </div>
-
-          <!-- Profile -->
-          <div class="app" data-screen="profile">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:4px">
-              <div class="av lg ring" style="width:64px;height:64px"></div>
-              <div class="aname" style="font-size:16px">Maya Cole
-                <svg class="seal" viewBox="0 0 24 24" fill="#fff"><path d="M12 1l2.4 2.1 3.1-.6 1 3 3 1-.6 3.1L23 12l-2.1 2.4.6 3.1-3 1-1 3-3.1-.6L12 23l-2.4-2.1-3.1.6-1-3-3-1 .6-3.1L1 12l2.1-2.4L2.5 6.5l3-1 1-3 3.1.6z"/><path d="M9.5 12.2l1.8 1.8 3.6-3.8" stroke="#000" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="arole">Photographer · New York</div>
-            </div>
-            <div class="astat-row">
-              <div class="astat"><b>1.2k</b><span>Connections</span></div>
-              <div class="astat"><b>48</b><span>Collabs</span></div>
-              <div class="astat"><b>12</b><span>Projects</span></div>
-            </div>
-            <div class="acard">
-              <div class="alabel">Profile viewers · Pro</div>
-              <div class="aviewer"><div class="av"></div><span>Julian Reyes</span><em>2h ago</em></div>
-              <div class="aviewer"><div class="av"></div><span>Ana Duarte</span><em>5h ago</em></div>
-              <div class="aviewer"><div class="av"></div><span>Theo Marchetti</span><em>1d ago</em></div>
-            </div>
-            <div class="abtn ghost">Message</div>
-            <div class="abtn" style="margin-top:0">✦&nbsp; Request Collab</div>
-          </div>
-
-        </div>
-      </div>
-      <div class="phone-tabs" role="tablist" aria-label="App screens">
-        <button class="on" data-tab="feed" role="tab" aria-selected="true">Feed</button>
-        <button data-tab="collab" role="tab" aria-selected="false">Collab</button>
-        <button data-tab="profile" role="tab" aria-selected="false">Profile</button>
-      </div>
-    </div>
+  <div class="stage">
+    <video
+      controls
+      playsinline
+      preload="metadata"
+      poster="icon.png"
+      aria-label="Tribes intro film">
+      <source src="intro.mp4" type="video/mp4" />
+      Your browser doesn't support embedded video. You can
+      <a href="intro.mp4" style="color:var(--white)">download the intro film</a> instead.
+    </video>
   </div>
-</header>
 
-<section id="features" class="wrap">
-  <div class="sec-head reveal">
-    <span class="eyebrow">What's inside</span>
-    <h2>Built for the people behind the lens, the brush, and the beat.</h2>
-    <p>Every feature was designed for working creatives — not influencers, not brands, not noise.</p>
-  </div>
-  <div class="grid">
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="1.6"/><path d="M21 15l-5-5-9 9"/></svg></div><h3>Community feed</h3><p>Share photos, video and audio with the community. Multi-image galleries, reactions beyond a like.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/></svg></div><h3>Voice messages</h3><p>When typing isn't enough — record and send voice notes in any conversation, solo or group.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2 4.3 4.7.6-3.4 3.2.9 4.6L12 13.6 7.8 15.7l.9-4.6L5.3 7.9 10 7.3z"/></svg></div><h3>Collab requests</h3><p>Send collaboration invites with a personal note and an attached project. Free members get 5 a month.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg></div><h3>Direct messages</h3><p>Private conversations with your network — one to one, or with your whole inner circle at once.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.2-3.4 3.8-5 7-5s5.8 1.6 7 5"/><circle cx="4.5" cy="10" r="2"/><circle cx="19.5" cy="10" r="2"/></svg></div><h3>Inner circle</h3><p>Curate your closest collaborators. Group chats, shared moodboards, your most trusted people in one place.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="12" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></div><h3>Projects &amp; moodboards</h3><p>Plan shoots and releases, invite collaborators, and build moodboards that align everyone on one aesthetic.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg></div><h3>Discover</h3><p>Find creatives by role, location and availability — photographers, stylists, directors, and a hundred more.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10 21a2.2 2.2 0 0 0 4 0"/></svg></div><h3>Smart notifications</h3><p>Granular controls — choose exactly what reaches you: connections, collabs, messages, reactions.</p></div>
-    <div class="fcard reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1l2.2 2 2.9-.6 1 2.9 2.8 1-.6 2.9 2 2.2-2 2.2.6 2.9-2.8 1-1 2.9-2.9-.6-2.2 2-2.2-2-2.9.6-1-2.9-2.8-1 .6-2.9-2-2.2 2-2.2-.6-2.9 2.8-1 1-2.9 2.9.6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Profile viewers <span class="pro-tag">Pro</span></h3><p>See who's been checking out your work — with analytics on views, connections, and growth.</p></div>
-  </div>
-</section>
-
-<div class="roles" aria-hidden="true">
-  <div class="marquee" id="marquee"></div>
-</div>
-
-<section id="pro" class="wrap">
-  <div class="pro-band">
-    <div class="reveal">
-      <span class="eyebrow">Tribes Pro</span>
-      <h2>Free to join.<br>Pro when you're working.</h2>
-      <p style="font-size:15px;line-height:1.6;color:var(--sub);margin-top:14px">Everything essential is free — the feed, messaging, calls, discovery. Pro removes the limits and opens the tools working professionals reach for.</p>
-    </div>
-    <div class="pro-list reveal">
-      <div class="pro-item"><b>Unlimited collabs</b><span>Send as many collaboration requests as the work demands.</span></div>
-      <div class="pro-item"><b>Unlimited projects</b><span>No caps on projects, moodboards, or inner-circle members.</span></div>
-      <div class="pro-item"><b>Profile viewers</b><span>See exactly who viewed your profile in the last 30 days.</span></div>
-      <div class="pro-item"><b>Analytics</b><span>Views, connection growth, and how your work is landing.</span></div>
-      <div class="pro-item"><b>Verified badge</b><span>A mark on your profile that tells people you're serious.</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="final wrap" id="join">
-  <span class="eyebrow reveal">Launching 2026</span>
-  <h2 class="reveal">Be there when the doors open.</h2>
-  <p class="reveal" style="font-size:15px;color:var(--sub);margin-top:14px">One email when Tribes lands on the App Store. Nothing else.</p>
-  <form class="waitlist reveal" data-form>
-    <input type="email" placeholder="your@email.com" required aria-label="Email address">
-    <button type="submit">Get notified</button>
-  </form>
-  <div class="form-msg" data-msg></div>
-</section>
-
-<footer>
-  <div class="wrap foot">
-    <span class="wordmark" style="font-size:16px">Tribes</span>
-    <div class="foot-links">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="support.html">Support</a>
-      <a href="mailto:support@tribes.network">Contact</a>
-    </div>
-    <span class="copy">© 2026 Tribes. All rights reserved.</span>
-  </div>
-</footer>
-
-<script>
-(function(){
-  // ── Config ────────────────────────────────────────────────
-  // WAITLIST_URL: the joinWaitlist Cloud Function. Verify the URL against the
-  // `firebase deploy --only functions` output and correct it here if it differs.
-  var WAITLIST_URL = "https://joinwaitlist-afwmkagbma-uc.a.run.app";
-  // APP_STORE_URL: leave empty until launch. On launch day, paste the App Store
-  // link here and every CTA on the page becomes "Download on the App Store".
-  var APP_STORE_URL = "";
-
-  document.querySelectorAll("[data-form]").forEach(function(form){
-    var msg = form.parentElement.querySelector("[data-msg]") || form.nextElementSibling;
-    form.addEventListener("submit", function(e){
-      e.preventDefault();
-      var email = form.querySelector("input").value.trim();
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-        msg.textContent = "Please enter a valid email address.";
-        msg.classList.remove("ok");
-        return;
-      }
-      msg.textContent = "Adding you…"; msg.classList.remove("ok");
-      fetch(WAITLIST_URL, {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ email: email })
-      }).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return {ok:r.ok, d:d}; }); })
-      .then(function(res){
-        if(res.ok){
-          msg.textContent = res.d.already ? "You're already on the list." : "You're on the list — we'll email you at launch.";
-          msg.classList.add("ok"); form.reset();
-        } else { throw 0; }
-      }).catch(function(){
-        window.location.href = "mailto:support@tribes.network?subject=" +
-          encodeURIComponent("Tribes launch list") + "&body=" +
-          encodeURIComponent("Add me to the launch list: " + email);
-        msg.textContent = "Opening your email app instead — hit send and you're on the list.";
-        msg.classList.add("ok");
-      });
-    });
-  });
-
-  // ── Launch mode ───────────────────────────────────────────
-  if(APP_STORE_URL){
-    var navCta = document.querySelector(".nav-cta");
-    if(navCta){ navCta.textContent = "Download"; navCta.href = APP_STORE_URL; }
-    document.querySelectorAll("[data-form]").forEach(function(form){
-      var a = document.createElement("a");
-      a.className = "nav-cta"; a.style.cssText = "display:inline-block;padding:15px 26px;font-size:15px;border-radius:16px";
-      a.textContent = "Download on the App Store"; a.href = APP_STORE_URL;
-      form.replaceWith(a);
-    });
-    var note = document.querySelector(".hero-note span:last-child");
-    if(note){ note.textContent = "Now on the App Store"; }
-  }
-
-  // ── Phone tabs ────────────────────────────────────────────
-  var tabs = document.querySelectorAll(".phone-tabs button");
-  tabs.forEach(function(t){
-    t.addEventListener("click", function(){
-      tabs.forEach(function(x){ x.classList.remove("on"); x.setAttribute("aria-selected","false"); });
-      t.classList.add("on"); t.setAttribute("aria-selected","true");
-      document.querySelectorAll(".app").forEach(function(s){
-        s.classList.toggle("on", s.dataset.screen === t.dataset.tab);
-      });
-    });
-  });
-
-  // ── Roles marquee (duplicated for seamless loop) ─────────
-  var roles = ["Photographer","Director","Stylist","Musician","Makeup Artist","Designer","Videographer","Art Director","Model","Producer","Illustrator","Editor","Set Designer","Colorist","Choreographer","Creative Director"];
-  var strip = roles.concat(roles).map(function(r){ return '<span class="role">'+r+'</span>'; }).join("");
-  document.getElementById("marquee").innerHTML = strip;
-
-  // ── Scroll reveals ────────────────────────────────────────
-  if("IntersectionObserver" in window){
-    var io = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold:.12 });
-    document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
-  } else {
-    document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); });
-  }
-})();
-</script>
+  <footer class="colophon">Tribes &middot; 2026</footer>
 
 </body>
 </html>
