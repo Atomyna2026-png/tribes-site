@@ -4,186 +4,398 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tribes — For creatives who collaborate</title>
-<meta name="description" content="Tribes — private circles for creatives who collaborate." />
+<meta name="description" content="Tribes — private circles for creatives who collaborate. No algorithm. No ads. Just your people." />
 <link rel="icon" type="image/png" href="icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --black:  #000000;
+    --panel:  #0a0a0b;
     --white:  #f4f2ee;
     --ash:    #b7b4ad;
     --dim:    #6d6a64;
-    --line:   rgba(244,242,238,0.16);
+    --line:   rgba(244,242,238,0.14);
+    --line-2: rgba(244,242,238,0.08);
     --serif:  'Fraunces', Georgia, serif;
     --sans:   'Inter', -apple-system, system-ui, sans-serif;
+    --pad:    clamp(64px, 10vh, 128px);
   }
 
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
   body {
     background: var(--black);
     color: var(--white);
     font-family: var(--sans);
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: clamp(40px, 7vh, 88px) 24px clamp(36px, 6vh, 72px);
+    line-height: 1.6;
     position: relative;
     overflow-x: hidden;
   }
 
-  body::before {
-    content: '';
-    position: fixed;
-    top: 22%;
-    left: 50%;
-    width: min(720px, 92vw);
-    height: min(720px, 92vw);
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(244,242,238,0.09) 0%, rgba(244,242,238,0.03) 34%, transparent 62%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
+  /* film grain */
   body::after {
     content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 3;
-    opacity: 0.04;
+    position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: 0.04;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
 
-  .wrap {
-    position: relative;
-    z-index: 1;
-    margin-block: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(30px, 5.5vh, 56px);
+  a { color: inherit; text-decoration: none; }
+  .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--dim); text-indent: 0.32em;
   }
 
-  .masthead { text-align: center; }
+  /* ── Sticky nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px clamp(20px, 4vw, 40px);
+    transition: background 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled {
+    background: rgba(4,4,5,0.72);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-brand img { width: 24px; height: 24px; border-radius: 6px; }
+  .nav-brand span { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 1.15rem; }
+  .nav-cta {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.02em;
+    padding: 8px 16px; border: 1px solid var(--line); border-radius: 100px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--white); color: var(--black); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 30px; padding: 120px 24px 72px; position: relative;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: 32%; left: 50%; transform: translate(-50%,-50%);
+    width: min(760px, 92vw); height: min(760px, 92vw);
+    background: radial-gradient(circle, rgba(244,242,238,0.09) 0%, rgba(244,242,238,0.03) 34%, transparent 62%);
+    pointer-events: none; z-index: 0;
+  }
+  .hero > * { position: relative; z-index: 1; }
 
   .wordmark {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 600;
-    font-optical-sizing: auto;
-    font-size: clamp(4rem, 15vw, 9.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.01em;
+    font-family: var(--serif); font-style: italic; font-weight: 600; font-optical-sizing: auto;
+    font-size: clamp(4rem, 15vw, 9.5rem); line-height: 0.9; letter-spacing: -0.01em;
     color: var(--white);
     text-shadow: 0 0 30px rgba(244,242,238,0.22), 0 0 72px rgba(244,242,238,0.10);
     animation: glow 5s ease-in-out infinite;
   }
-
   @keyframes glow {
-    0%, 100% { text-shadow: 0 0 26px rgba(244,242,238,0.16), 0 0 62px rgba(244,242,238,0.06); }
-    50%      { text-shadow: 0 0 42px rgba(244,242,238,0.32), 0 0 96px rgba(244,242,238,0.15); }
+    0%,100% { text-shadow: 0 0 26px rgba(244,242,238,0.16), 0 0 62px rgba(244,242,238,0.06); }
+    50%     { text-shadow: 0 0 42px rgba(244,242,238,0.32), 0 0 96px rgba(244,242,238,0.15); }
   }
-
-  .divider-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    text-align: center;
-  }
-
   .rule { width: 52px; height: 1px; background: var(--white); opacity: 0.28; }
-
   .tagline {
-    font-weight: 500;
-    font-size: clamp(0.62rem, 1.6vw, 0.78rem);
-    letter-spacing: 0.42em;
-    text-indent: 0.42em;
-    color: var(--ash);
-    text-transform: uppercase;
+    font-weight: 500; font-size: clamp(0.62rem, 1.6vw, 0.78rem);
+    letter-spacing: 0.42em; text-indent: 0.42em; color: var(--ash); text-transform: uppercase;
   }
-
-  .icon {
-    width: clamp(74px, 12vw, 104px);
-    aspect-ratio: 1;
-    border-radius: 23%;
-    object-fit: cover;
+  .hero-icon {
+    width: clamp(72px, 11vw, 96px); aspect-ratio: 1; border-radius: 23%; object-fit: cover;
     border: 1px solid rgba(244,242,238,0.14);
     box-shadow: 0 18px 48px rgba(0,0,0,0.7), 0 0 40px rgba(244,242,238,0.06);
-    display: block;
   }
 
-  .stage {
-    width: 100%;
-    max-width: 860px;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    overflow: hidden;
-    background: #050505;
-    box-shadow: 0 40px 90px rgba(0,0,0,0.6), inset 0 1px 0 rgba(244,242,238,0.06);
+  /* ── Small video with enlarge ── */
+  .video-shell {
+    position: relative; width: 100%; max-width: 440px; aspect-ratio: 16 / 9;
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+    background: #050505; cursor: zoom-in;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+  }
+  .video-shell video { display: block; width: 100%; height: 100%; object-fit: cover; background: #000; }
+  .enlarge-chip {
+    position: absolute; bottom: 10px; right: 10px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; letter-spacing: 0.04em; color: var(--white);
+    background: rgba(0,0,0,0.55); border: 1px solid var(--line);
+    padding: 6px 11px; border-radius: 100px; backdrop-filter: blur(6px);
+    pointer-events: none;
   }
 
-  .stage video { display: block; width: 100%; height: auto; background: #000; }
+  .btn {
+    display: inline-block; font-weight: 500; font-size: 0.92rem; letter-spacing: 0.02em;
+    padding: 13px 30px; border-radius: 100px; border: 1px solid var(--white);
+    background: var(--white); color: var(--black); transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn:hover { transform: translateY(-1px); opacity: 0.9; }
 
-  .colophon {
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-top: 4px;
+  .scroll-hint { font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--dim); margin-top: 8px; }
+  .scroll-hint span { display: block; margin-top: 8px; animation: bob 2s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(5px); opacity: 1; } }
+
+  /* ── Sections ── */
+  .section { padding: var(--pad) 24px; max-width: 1080px; margin: 0 auto; }
+
+  .intro { text-align: center; max-width: 760px; }
+  .intro h2 {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: clamp(1.7rem, 4.5vw, 2.9rem); line-height: 1.25; margin: 18px 0 0;
+  }
+  .intro p { color: var(--ash); font-size: 1.05rem; margin-top: 22px; }
+
+  .features-head { text-align: center; margin-bottom: 54px; }
+  .features-head h2 {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: clamp(1.6rem, 4vw, 2.4rem); margin-top: 14px;
+  }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); border-radius: 14px; overflow: hidden; }
+  .feature-card {
+    background: var(--panel); padding: 32px 26px 34px;
+    opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .feature-card.visible { opacity: 1; transform: translateY(0); }
+  .feature-num { font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: var(--dim); }
+  .feature-title { font-size: 1.12rem; font-weight: 600; margin: 14px 0 10px; letter-spacing: -0.01em; }
+  .feature-desc { color: var(--ash); font-size: 0.94rem; line-height: 1.65; }
+
+  /* ── Quote band ── */
+  .quote { text-align: center; padding: var(--pad) 24px; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); position: relative; overflow: hidden; }
+  .quote-inner { max-width: 820px; margin: 0 auto; position: relative; z-index: 1; }
+  .quote h3 {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: clamp(1.6rem, 4.4vw, 2.8rem); line-height: 1.3;
+  }
+  .quote p { color: var(--ash); margin-top: 22px; font-size: 1.02rem; }
+  .quote-ghost {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    font-family: var(--serif); font-style: italic; font-weight: 600;
+    font-size: clamp(9rem, 34vw, 24rem); color: rgba(244,242,238,0.025); z-index: 0;
+    white-space: nowrap; pointer-events: none; user-select: none;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .masthead, .divider-wrap, .icon, .stage, .colophon {
-      opacity: 0;
-      transform: translateY(16px);
-      animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-    .masthead     { animation-delay: 0.10s; }
-    .divider-wrap { animation-delay: 0.55s; }
-    .icon         { animation-delay: 0.95s; }
-    .stage        { animation-delay: 1.30s; }
-    .colophon     { animation-delay: 1.70s; }
-    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+  /* ── Roles ── */
+  .roles { text-align: center; }
+  .roles h3 {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: clamp(1.5rem, 4vw, 2.3rem); margin-bottom: 40px;
   }
+  .roles-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 900px; margin: 0 auto; }
+  .role-pill {
+    font-size: 0.86rem; color: var(--ash); padding: 9px 18px;
+    border: 1px solid var(--line); border-radius: 100px; transition: color 0.2s, border-color 0.2s;
+  }
+  .role-pill:hover { color: var(--white); border-color: var(--white); }
 
-  @media (max-width: 560px) { .stage { border-radius: 12px; } }
+  /* ── Waitlist ── */
+  .waitlist-section { text-align: center; border-top: 1px solid var(--line-2); }
+  .waitlist-section h2 {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: clamp(2rem, 5.5vw, 3.4rem); margin-top: 14px;
+  }
+  .waitlist-section p { color: var(--ash); margin-top: 16px; }
+  .waitlist { display: flex; gap: 10px; max-width: 440px; margin: 34px auto 0; flex-wrap: wrap; justify-content: center; }
+  .waitlist input {
+    flex: 1; min-width: 220px; background: var(--panel); border: 1px solid var(--line);
+    color: var(--white); font-family: var(--sans); font-size: 0.95rem;
+    padding: 13px 18px; border-radius: 100px; outline: none;
+  }
+  .waitlist input::placeholder { color: var(--dim); }
+  .waitlist input:focus { border-color: var(--white); }
+  .waitlist button {
+    background: var(--white); color: var(--black); border: none; font-family: var(--sans);
+    font-weight: 500; font-size: 0.92rem; padding: 13px 26px; border-radius: 100px; cursor: pointer;
+  }
+  .waitlist-msg { color: var(--ash); margin-top: 18px; min-height: 1.2em; font-size: 0.92rem; }
+
+  /* ── Footer ── */
+  footer { text-align: center; padding: 64px 24px 56px; border-top: 1px solid var(--line-2); }
+  .footer-mark { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 1.5rem; }
+  .footer-tagline { color: var(--dim); font-style: italic; font-family: var(--serif); margin-top: 8px; font-size: 0.98rem; }
+  .footer-links { display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; margin: 26px 0 22px; }
+  .footer-links a { font-size: 0.86rem; color: var(--ash); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 0.78rem; color: var(--dim); }
+
+  /* ── Lightbox ── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 80; display: none;
+    align-items: center; justify-content: center; padding: 24px;
+    background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .lightbox.open { display: flex; }
+  #lbSlot { width: 100%; max-width: 1100px; }
+  #lbSlot video { width: 100%; max-height: 84vh; border-radius: 12px; background: #000; display: block; cursor: default; }
+  .lb-close {
+    position: absolute; top: 20px; right: 24px; width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 50%; color: var(--white);
+    background: rgba(0,0,0,0.4); font-size: 1.2rem; line-height: 1;
+  }
+  .lb-close:hover { background: var(--white); color: var(--black); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wordmark, .scroll-hint span { animation: none; }
+    .feature-card { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 560px) { :root { --pad: 72px; } .nav-brand span { display: none; } }
 </style>
 </head>
 <body>
-  <main class="wrap">
 
-    <header class="masthead">
-      <h1 class="wordmark">Tribes</h1>
-    </header>
+  <nav id="nav">
+    <a class="nav-brand" href="#top">
+      <img src="icon.png" alt="Tribes" onerror="this.style.display='none'" />
+      <span>Tribes</span>
+    </a>
+    <a class="nav-cta" href="#waitlist">Join the waitlist</a>
+  </nav>
 
-    <div class="divider-wrap">
-      <span class="rule" aria-hidden="true"></span>
-      <p class="tagline">For creatives who collaborate</p>
-    </div>
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <h1 class="wordmark">Tribes</h1>
+    <span class="rule" aria-hidden="true"></span>
+    <p class="tagline">For creatives who collaborate</p>
 
-    <img class="icon" src="icon.png" alt="Tribes app icon" width="104" height="104"
+    <img class="hero-icon" src="icon.png" alt="Tribes app icon"
          onerror="var s=this.dataset.s||'0'; if(s==='0'){this.dataset.s='1'; this.src='AppIcon-1024.png';} else {this.style.display='none';}" />
 
-    <div class="stage">
-      <video controls playsinline preload="metadata" aria-label="Tribes intro film">
+    <div class="video-shell" id="videoShell" onclick="openLB()" role="button" aria-label="Play the Tribes intro film">
+      <video id="film" muted loop playsinline autoplay preload="metadata">
         <source src="intro.mp4" type="video/mp4" />
         <source src="davinci_create_a_20_second_cinematic_intro_video_for_tribe.mp4" type="video/mp4" />
-        Your browser can’t play embedded video —
-        <a href="intro.mp4" style="color:var(--white)">download the intro film</a> instead.
       </video>
+      <span class="enlarge-chip">&#8599;&nbsp; Enlarge</span>
     </div>
 
-    <footer class="colophon">Tribes &middot; 2026</footer>
+    <a class="btn" href="#waitlist">Join the waitlist</a>
+    <div class="scroll-hint">Explore<span>&#8595;</span></div>
+  </header>
 
-  </main>
+  <!-- INTRO -->
+  <section class="section intro">
+    <p class="eyebrow">What is Tribes</p>
+    <h2>A private space for creative professionals to build their circles and do great work together.</h2>
+    <p>No public feed. No algorithm. No ads. Tribes is invite-only by design — a place to share work, coordinate projects, and stay close to the people you actually create with.</p>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="features-head">
+      <p class="eyebrow">Everything your circle needs</p>
+      <h2>Built for the way creatives work.</h2>
+    </div>
+    <div class="features" id="features">
+      <div class="feature-card"><div class="feature-num">01</div><h3 class="feature-title">Private Circles</h3><p class="feature-desc">Invite-only circles for your crew. What's shared inside stays inside — no outsiders, no algorithm.</p></div>
+      <div class="feature-card"><div class="feature-num">02</div><h3 class="feature-title">Real-time Messaging</h3><p class="feature-desc">Message your whole circle instantly. Coordinate shoots, swap references, keep the work moving.</p></div>
+      <div class="feature-card"><div class="feature-num">03</div><h3 class="feature-title">Direct Messages</h3><p class="feature-desc">Slide into a 1-on-1 with any member. Share media and keep the conversation going off the main feed.</p></div>
+      <div class="feature-card"><div class="feature-num">04</div><h3 class="feature-title">Photo &amp; Video Sharing</h3><p class="feature-desc">Drop full-resolution photos and video straight into the conversation. Built for people who work in images.</p></div>
+      <div class="feature-card"><div class="feature-num">05</div><h3 class="feature-title">Collab Requests</h3><p class="feature-desc">Send and accept collaboration requests, so the right people find their way onto the right projects.</p></div>
+      <div class="feature-card"><div class="feature-num">06</div><h3 class="feature-title">Discover Creatives</h3><p class="feature-desc">Find photographers, stylists, editors, and more — and the circles they're building in your field.</p></div>
+      <div class="feature-card"><div class="feature-num">07</div><h3 class="feature-title">Notifications</h3><p class="feature-desc">Stay in the loop on invites, messages, and reactions — and nothing else.</p></div>
+      <div class="feature-card"><div class="feature-num">08</div><h3 class="feature-title">Your Controls</h3><p class="feature-desc">Choose exactly what matters — connections, collabs, messages, reactions, and more.</p></div>
+      <div class="feature-card"><div class="feature-num">09</div><h3 class="feature-title">Creative Profiles</h3><p class="feature-desc">Build a rich creative profile that showcases your roles, portfolio, bio, and availability. Let the right people find you.</p></div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <div class="quote">
+    <div class="quote-ghost" aria-hidden="true">Tribes</div>
+    <div class="quote-inner">
+      <h3>"Built for the people behind the lens, the brush, and the beat."</h3>
+      <p>Every feature in Tribes was designed with creative professionals in mind — not influencers, not brands. Just creatives who want to do great work together.</p>
+    </div>
+  </div>
+
+  <!-- ROLES -->
+  <section class="section roles">
+    <h3>Built for every kind of creative</h3>
+    <div class="roles-wrap">
+      <span class="role-pill">Photographer</span><span class="role-pill">Videographer</span><span class="role-pill">Film Director</span><span class="role-pill">Film Editor</span><span class="role-pill">Art Director</span><span class="role-pill">Creative Director</span><span class="role-pill">Stylist</span><span class="role-pill">Makeup Artist</span><span class="role-pill">Hair Stylist</span><span class="role-pill">Fashion Designer</span><span class="role-pill">Model</span><span class="role-pill">Graphic Designer</span><span class="role-pill">Illustrator</span><span class="role-pill">Musician</span><span class="role-pill">Music Producer</span><span class="role-pill">Dancer</span><span class="role-pill">Actor</span><span class="role-pill">Content Creator</span><span class="role-pill">Copywriter</span><span class="role-pill">Muralist</span><span class="role-pill">Set Designer</span><span class="role-pill">Producer</span><span class="role-pill">&amp; many more</span>
+    </div>
+  </section>
+
+  <!-- WAITLIST -->
+  <section class="section waitlist-section" id="waitlist">
+    <p class="eyebrow">Coming to iOS</p>
+    <h2>Your circle is waiting.</h2>
+    <p>Join the waitlist and we'll send one email when the doors open.</p>
+    <form class="waitlist" id="waitlistForm" autocomplete="off" onsubmit="return joinWaitlist(event)">
+      <input type="email" id="waitlistEmail" placeholder="your@email.com" required aria-label="Email address" />
+      <button type="submit">Reserve my spot</button>
+    </form>
+    <div class="waitlist-msg" id="waitlistMsg"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-mark">Tribes</div>
+    <div class="footer-tagline">For creatives who collaborate.</div>
+    <div class="footer-links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/support">Support</a>
+      <a href="mailto:hello@tribes.network">Contact</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Tribes. All rights reserved.</p>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLB()">
+    <div class="lb-close" onclick="closeLB()" role="button" aria-label="Close">&#10005;</div>
+    <div id="lbSlot"></div>
+  </div>
+
+  <script>
+    // Sticky nav backdrop
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Feature scroll-reveal
+    var cards = document.querySelectorAll('.feature-card');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e, i) {
+        if (e.isIntersecting) {
+          setTimeout(function () { e.target.classList.add('visible'); }, i * 70);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(function (c) { io.observe(c); });
+
+    // Video lightbox — reuses the single loaded video element
+    var film = document.getElementById('film');
+    var lb = document.getElementById('lightbox');
+    var slot = document.getElementById('lbSlot');
+    var shell = document.getElementById('videoShell');
+    function openLB() {
+      slot.appendChild(film);
+      film.controls = true; film.muted = false; film.loop = false;
+      lb.classList.add('open'); document.body.style.overflow = 'hidden';
+      film.play().catch(function(){});
+    }
+    function closeLB() {
+      film.pause();
+      film.controls = false; film.muted = true; film.loop = true;
+      shell.appendChild(film);
+      lb.classList.remove('open'); document.body.style.overflow = '';
+      film.play().catch(function(){});
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLB(); });
+
+    // Waitlist (front-end confirmation only)
+    function joinWaitlist(e) {
+      e.preventDefault();
+      document.getElementById('waitlistEmail').value = '';
+      document.getElementById('waitlistMsg').textContent = "You're on the list — we'll be in touch. \u2713";
+      return false;
+    }
+  </script>
+
 </body>
 </html>
