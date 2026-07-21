@@ -13,14 +13,13 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --black:   #000000;
-    --near:    #0a0a0b;
-    --white:   #f4f2ee;
-    --ash:     #b7b4ad;
-    --dim:     #6d6a64;
-    --line:    rgba(244,242,238,0.16);
-    --serif:   'Fraunces', Georgia, serif;
-    --sans:    'Inter', -apple-system, system-ui, sans-serif;
+    --black:  #000000;
+    --white:  #f4f2ee;
+    --ash:    #b7b4ad;
+    --dim:    #6d6a64;
+    --line:   rgba(244,242,238,0.16);
+    --serif:  'Fraunces', Georgia, serif;
+    --sans:   'Inter', -apple-system, system-ui, sans-serif;
   }
 
   html { -webkit-text-size-adjust: 100%; }
@@ -34,28 +33,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 7vh 24px 5vh;
-    gap: clamp(34px, 6vh, 60px);
+    padding: clamp(40px, 7vh, 88px) 24px clamp(36px, 6vh, 72px);
     position: relative;
     overflow-x: hidden;
   }
 
-  /* Ambient glow behind the masthead */
   body::before {
     content: '';
     position: fixed;
-    top: 18%;
+    top: 22%;
     left: 50%;
-    width: min(760px, 92vw);
-    height: min(760px, 92vw);
+    width: min(720px, 92vw);
+    height: min(720px, 92vw);
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(244,242,238,0.10) 0%, rgba(244,242,238,0.03) 32%, transparent 62%);
+    background: radial-gradient(circle, rgba(244,242,238,0.09) 0%, rgba(244,242,238,0.03) 34%, transparent 62%);
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Fine film grain for editorial texture */
   body::after {
     content: '';
     position: fixed;
@@ -66,9 +61,17 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
 
-  .masthead, .divider-wrap, .icon, .stage { position: relative; z-index: 1; }
+  .wrap {
+    position: relative;
+    z-index: 1;
+    margin-block: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(30px, 5.5vh, 56px);
+  }
 
-  /* ── Masthead ── */
   .masthead { text-align: center; }
 
   .wordmark {
@@ -79,20 +82,14 @@
     font-size: clamp(4rem, 15vw, 9.5rem);
     line-height: 0.9;
     letter-spacing: -0.01em;
-    background: linear-gradient(100deg, #7c7a75 0%, #ffffff 32%, #f2f0ec 50%, #ffffff 68%, #7c7a75 100%);
-    background-size: 220% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    animation: sheen 7s ease-in-out infinite;
-    filter: drop-shadow(0 0 26px rgba(244,242,238,0.18));
+    color: var(--white);
+    text-shadow: 0 0 30px rgba(244,242,238,0.22), 0 0 72px rgba(244,242,238,0.10);
+    animation: glow 5s ease-in-out infinite;
   }
 
-  @keyframes sheen {
-    0%   { background-position: 130% 0; }
-    50%  { background-position: -30% 0; }
-    100% { background-position: 130% 0; }
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 26px rgba(244,242,238,0.16), 0 0 62px rgba(244,242,238,0.06); }
+    50%      { text-shadow: 0 0 42px rgba(244,242,238,0.32), 0 0 96px rgba(244,242,238,0.15); }
   }
 
   .divider-wrap {
@@ -103,15 +100,9 @@
     text-align: center;
   }
 
-  .rule {
-    width: 52px;
-    height: 1px;
-    background: var(--white);
-    opacity: 0.28;
-  }
+  .rule { width: 52px; height: 1px; background: var(--white); opacity: 0.28; }
 
   .tagline {
-    font-family: var(--sans);
     font-weight: 500;
     font-size: clamp(0.62rem, 1.6vw, 0.78rem);
     letter-spacing: 0.42em;
@@ -120,21 +111,16 @@
     text-transform: uppercase;
   }
 
-  /* ── App icon ── */
   .icon {
     width: clamp(74px, 12vw, 104px);
     aspect-ratio: 1;
     border-radius: 23%;
     object-fit: cover;
     border: 1px solid rgba(244,242,238,0.14);
-    box-shadow:
-      0 18px 48px rgba(0,0,0,0.7),
-      0 0 0 1px rgba(0,0,0,0.4),
-      0 0 40px rgba(244,242,238,0.06);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.7), 0 0 40px rgba(244,242,238,0.06);
     display: block;
   }
 
-  /* ── Framed video player ── */
   .stage {
     width: 100%;
     max-width: 860px;
@@ -142,35 +128,23 @@
     border-radius: 14px;
     overflow: hidden;
     background: #050505;
-    box-shadow:
-      0 40px 90px rgba(0,0,0,0.65),
-      inset 0 1px 0 rgba(244,242,238,0.06);
+    box-shadow: 0 40px 90px rgba(0,0,0,0.6), inset 0 1px 0 rgba(244,242,238,0.06);
   }
 
-  .stage video {
-    display: block;
-    width: 100%;
-    height: auto;
-    background: #000;
-  }
+  .stage video { display: block; width: 100%; height: auto; background: #000; }
 
   .colophon {
-    position: relative;
-    z-index: 1;
-    font-family: var(--sans);
     font-size: 0.7rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--dim);
-    margin-top: 6px;
+    margin-top: 4px;
   }
 
-  /* ── Orchestrated entrance ── */
   @media (prefers-reduced-motion: no-preference) {
     .masthead, .divider-wrap, .icon, .stage, .colophon {
       opacity: 0;
       transform: translateY(16px);
-      filter: blur(6px);
       animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
     .masthead     { animation-delay: 0.10s; }
@@ -178,48 +152,38 @@
     .icon         { animation-delay: 0.95s; }
     .stage        { animation-delay: 1.30s; }
     .colophon     { animation-delay: 1.70s; }
-
-    /* keep the wordmark's own sheen/glow running after it settles */
-    .wordmark { animation: sheen 7s ease-in-out infinite; }
-
-    @keyframes rise {
-      to { opacity: 1; transform: translateY(0); filter: blur(0); }
-    }
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
   }
 
-  @media (max-width: 560px) {
-    body { gap: clamp(28px, 5vh, 44px); padding-top: 9vh; }
-    .stage { border-radius: 12px; }
-  }
+  @media (max-width: 560px) { .stage { border-radius: 12px; } }
 </style>
 </head>
 <body>
+  <main class="wrap">
 
-  <header class="masthead">
-    <h1 class="wordmark">Tribes</h1>
-  </header>
+    <header class="masthead">
+      <h1 class="wordmark">Tribes</h1>
+    </header>
 
-  <div class="divider-wrap">
-    <span class="rule" aria-hidden="true"></span>
-    <p class="tagline">For creatives who collaborate</p>
-  </div>
+    <div class="divider-wrap">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="tagline">For creatives who collaborate</p>
+    </div>
 
-  <img class="icon" src="icon.png" alt="Tribes app icon" width="104" height="104" />
+    <img class="icon" src="icon.png" alt="Tribes app icon" width="104" height="104"
+         onerror="var s=this.dataset.s||'0'; if(s==='0'){this.dataset.s='1'; this.src='AppIcon-1024.png';} else {this.style.display='none';}" />
 
-  <div class="stage">
-    <video
-      controls
-      playsinline
-      preload="metadata"
-      poster="icon.png"
-      aria-label="Tribes intro film">
-      <source src="intro.mp4" type="video/mp4" />
-      Your browser doesn't support embedded video. You can
-      <a href="intro.mp4" style="color:var(--white)">download the intro film</a> instead.
-    </video>
-  </div>
+    <div class="stage">
+      <video controls playsinline preload="metadata" aria-label="Tribes intro film">
+        <source src="intro.mp4" type="video/mp4" />
+        <source src="davinci_create_a_20_second_cinematic_intro_video_for_tribe.mp4" type="video/mp4" />
+        Your browser can’t play embedded video —
+        <a href="intro.mp4" style="color:var(--white)">download the intro film</a> instead.
+      </video>
+    </div>
 
-  <footer class="colophon">Tribes &middot; 2026</footer>
+    <footer class="colophon">Tribes &middot; 2026</footer>
 
+  </main>
 </body>
 </html>
