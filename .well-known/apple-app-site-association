@@ -1,10 +1,11 @@
 {
   "applinks": {
-    "apps": [],
     "details": [
       {
-        "appID": "29B8BKRRZT.app.tribetalkapp.ios",
-        "paths": ["/u/*"]
+        "appIDs": ["4W5N5BWQF4.app.tribetalkapp.ios"],
+        "components": [
+          { "/": "/u/*" }
+        ]
       }
     ]
   }
