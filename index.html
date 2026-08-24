@@ -257,16 +257,19 @@
     html { scroll-behavior: auto; }
   }
   @media (max-width: 640px) {
+    .hdr-dl { display: none; }
     .util { display: none; }
     .m-brand .nm { font-size: 1.05rem; }
     .sw span { display: none; }
   }
+  .hdr-dl { border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; margin-right: 18px; transition: border-color .3s; }
+  .hdr-dl:hover { border-color: var(--ink); }
 </style>
 </head>
 <body>
 
 <div class="util">
-  <span class="lbl">search</span>
+  <a href="https://apps.apple.com/app/id6762027423" class="lbl">download</a>
   <a href="#join" class="lbl">contact</a>
 </div>
 
@@ -280,6 +283,7 @@
     <span class="sub">est. 2026</span>
   </a>
   <div class="m-right">
+    <a href="https://apps.apple.com/app/id6762027423" class="lbl hdr-dl">get the app</a>
     <div class="sw">
       <span>ON</span>
       <button class="sw-track" onclick="flip()" aria-label="toggle theme"><i class="sw-knob"></i></button>
@@ -305,9 +309,9 @@
   <div class="rule-lbl rv"><span class="lbl">for creatives who collaborate</span></div>
   <h1 class="display rv">Work<br/>With Your People</h1>
   <p class="lede rv">Tribes began with a simple idea — that the best creative work happens inside a circle of people who trust each other. No public feed. No algorithm. No ads.</p>
-  <a class="oval rv" href="#about">
+  <a class="oval rv" href="https://apps.apple.com/app/id6762027423">
     <svg viewBox="0 0 240 86" preserveAspectRatio="none" aria-hidden="true"><path d="M120 4 C186 4 236 20 236 43 C236 66 186 82 120 82 C54 82 4 66 4 43 C4 20 54 4 120 4 C142 3.4 160 4.6 176 7"/></svg>
-    <span>discover more<br/>about tribes</span>
+    <span>download<br/>on the app store</span>
   </a>
 </section>
 
